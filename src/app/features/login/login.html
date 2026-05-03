@@ -1,0 +1,267 @@
+<div class="relative min-h-screen w-full overflow-hidden bg-[#0d1a0f] flex items-center justify-center">
+
+<app-auth-bg />
+  <div class="relative z-10 w-full max-w-115 mx-4">
+
+    <div class="h-1 w-full rounded-t-2xl"
+         style="background: linear-gradient(90deg, #4a7c32, #d4881e, #4a7c32);"></div>
+
+
+
+    <div class="rounded-b-2xl px-10 pt-10 pb-12"
+         style="background: rgba(255,255,255,0.05);
+                backdrop-filter: blur(28px);
+                -webkit-backdrop-filter: blur(28px);
+                border: 1px solid rgba(255,255,255,0.1);
+                border-top: none;
+                box-shadow: 0 32px 80px rgba(0,0,0,0.65);">
+
+      <div class="flex flex-col items-center mb-10">
+
+        <h1 class="text-4xl font-black tracking-tight text-white mb-1"
+            style="font-family: 'Playfair Display', Georgia, serif; letter-spacing: -0.02em;">
+          eco<span style="color: #6dbf4a;">eats</span>
+        </h1>
+        <p class="text-xs font-light uppercase"
+           style="color: rgba(255,255,255,0.35); font-family: 'DM Sans', sans-serif; letter-spacing: 0.22em;">
+          Fresh &nbsp;·&nbsp; Sustainable &nbsp;·&nbsp; Delivered
+        </p>
+      </div>
+
+      <div class="flex gap-1 mb-8 p-1 rounded-xl"
+           style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.07);">
+
+        <button type="button"
+                (click)="setTab(SignupTabs.CLIENT)"
+                class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-semibold
+                       transition-all duration-250 relative overflow-hidden"
+                [style.background]="activeTab() === SignupTabs.CLIENT ? 'linear-gradient(135deg,#4a7c32,#6dbf4a)' : 'transparent'"
+                [style.color]="activeTab() === SignupTabs.CLIENT ? '#fff' : 'rgba(255,255,255,0.45)'"
+                [style.boxShadow]="activeTab() === SignupTabs.CLIENT ? '0 4px 14px rgba(74,124,50,0.4)' : 'none'"
+                style="font-family: 'DM Sans', sans-serif; letter-spacing: 0.04em; border: none; cursor: pointer;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke-width="2" stroke="currentColor" style="width:15px;height:15px;flex-shrink:0;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+          </svg>
+          Client
+        </button>
+
+        <button type="button"
+                (click)="setTab(SignupTabs.DELIVERER)"
+                class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-semibold
+                       transition-all duration-250"
+                [style.background]="activeTab() === SignupTabs.DELIVERER ? 'linear-gradient(135deg,#4a7c32,#6dbf4a)' : 'transparent'"
+                [style.color]="activeTab() === SignupTabs.DELIVERER ? '#fff' : 'rgba(255,255,255,0.45)'"
+                [style.boxShadow]="activeTab() === SignupTabs.DELIVERER ? '0 4px 14px rgba(74,124,50,0.4)' : 'none'"
+                style="font-family: 'DM Sans', sans-serif; letter-spacing: 0.04em; border: none; cursor: pointer;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke-width="2" stroke="currentColor" style="width:15px;height:15px;flex-shrink:0;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+          </svg>
+          Deliverer
+        </button>
+
+        <button type="button"
+                (click)="setTab(SignupTabs.RESTAURANT)"
+                class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-semibold
+                       transition-all duration-250"
+                [style.background]="activeTab() === SignupTabs.RESTAURANT ? 'linear-gradient(135deg,#4a7c32,#6dbf4a)' : 'transparent'"
+                [style.color]="activeTab() === SignupTabs.RESTAURANT ? '#fff' : 'rgba(255,255,255,0.45)'"
+                [style.boxShadow]="activeTab() === SignupTabs.RESTAURANT ? '0 4px 14px rgba(74,124,50,0.4)' : 'none'"
+                style="font-family: 'DM Sans', sans-serif; letter-spacing: 0.04em; border: none; cursor: pointer;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke-width="2" stroke="currentColor" style="width:15px;height:15px;flex-shrink:0;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
+          </svg>
+          Restaurant
+        </button>
+      </div>
+
+      <!-- Welcome -->
+      <div class="mb-8 text-center">
+        <h2 class="text-xl font-semibold text-white mb-1"
+            style="font-family: 'Playfair Display', Georgia, serif;">
+          Welcome back
+        </h2>
+        <p class="text-sm" style="color: rgba(255,255,255,0.45); font-family: 'DM Sans', sans-serif;">
+          Sign in to continue your green journey
+        </p>
+      </div>
+
+
+
+      <!-- FORM -->
+      <form novalidate [formGroup]="loginForm" (ngSubmit)="handleLoginClick()" class="space-y-5">
+
+        <!-- Email -->
+        <div>
+          <label class="block text-xs font-semibold mb-2 uppercase tracking-widest"
+                 style="color: rgba(255,255,255,0.6); font-family: 'DM Sans', sans-serif;"
+                 for="email">
+            Email address
+          </label>
+          <div class="relative">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style="color: #6dbf4a;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   stroke-width="1.8" stroke="currentColor" style="width:20px;height:20px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+              </svg>
+            </span>
+            <input
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              formControlName="email"
+              style="width:100%; padding: 14px 16px 14px 44px; border-radius: 12px;
+                     background: rgba(255,255,255,0.10); border: 1.5px solid rgba(255,255,255,0.28);
+                     color: #fff; font-size: 14px; font-family: 'DM Sans', sans-serif;
+                     outline: none; transition: border-color 0.25s, background 0.25s;"
+              onfocus="this.style.borderColor='rgba(109,191,74,0.75)'; this.style.background='rgba(255,255,255,0.15)'; this.style.boxShadow='0 0 0 3px rgba(109,191,74,0.15)';"
+              onblur="this.style.borderColor='rgba(255,255,255,0.28)'; this.style.background='rgba(255,255,255,0.10)'; this.style.boxShadow='none';"
+            />
+          </div>
+          @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+            <p class="text-xs mt-1.5" style="color:rgba(239,68,68,0.85); font-family:'DM Sans',sans-serif;">
+              @if (loginForm.get('email')?.hasError('required')) { Email is required. }
+              @else if (loginForm.get('email')?.hasError('email')) { Enter a valid email address. }
+            </p>
+          }
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <label class="text-xs font-semibold uppercase tracking-widest"
+                   style="color: rgba(255,255,255,0.6); font-family: 'DM Sans', sans-serif;"
+                   for="password">
+              Password
+            </label>
+            <a href="/forgot-password"
+               class="text-xs transition-colors duration-200 hover:text-[#6dbf4a]"
+               style="color: rgba(255,255,255,0.42); font-family: 'DM Sans', sans-serif;">
+              Forgot password?
+            </a>
+          </div>
+          <div class="relative">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style="color: #6dbf4a;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   stroke-width="1.8" stroke="currentColor" style="width:20px;height:20px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+              </svg>
+            </span>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              formControlName="password"
+              style="width:100%; padding: 14px 48px 14px 44px; border-radius: 12px;
+                     background: rgba(255,255,255,0.10); border: 1.5px solid rgba(255,255,255,0.28);
+                     color: #fff; font-size: 14px; font-family: 'DM Sans', sans-serif;
+                     outline: none; transition: border-color 0.25s, background 0.25s;"
+              onfocus="this.style.borderColor='rgba(109,191,74,0.75)'; this.style.background='rgba(255,255,255,0.15)'; this.style.boxShadow='0 0 0 3px rgba(109,191,74,0.15)';"
+              onblur="this.style.borderColor='rgba(255,255,255,0.28)'; this.style.background='rgba(255,255,255,0.10)'; this.style.boxShadow='none';"
+            />
+            <button type="button"
+                    style="position:absolute; right:14px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.45); background:none; border:none; cursor:pointer; padding:0; transition:color 0.2s;"
+                    onmouseenter="this.style.color='rgba(109,191,74,0.9)';"
+                    onmouseleave="this.style.color='rgba(255,255,255,0.45)';"
+                    onclick="
+                      const inp = document.getElementById('password');
+                      const eyeOpen = document.getElementById('eye-open');
+                      const eyeOff  = document.getElementById('eye-off');
+                      if (inp.type === 'password') {
+                        inp.type = 'text';
+                        eyeOpen.style.display = 'none';
+                        eyeOff.style.display  = 'block';
+                      } else {
+                        inp.type = 'password';
+                        eyeOpen.style.display = 'block';
+                        eyeOff.style.display  = 'none';
+                      }
+                    ">
+              <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   stroke-width="1.8" stroke="currentColor" style="width:20px;height:20px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+              <svg id="eye-off" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   stroke-width="1.8" stroke="currentColor" style="width:20px;height:20px;display:none;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+              </svg>
+            </button>
+          </div>
+          @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+            <p class="text-xs mt-1.5" style="color:rgba(239,68,68,0.85); font-family:'DM Sans',sans-serif;">
+              @if (loginForm.get('password')?.hasError('required')) { Password is required. }
+              @else if (loginForm.get('password')?.hasError('minlength')) { Password must be at least 6 characters. }
+            </p>
+          }
+        </div>
+
+        <div class="flex items-center gap-3 pt-1">
+          <input id="remember" type="checkbox"
+                 style="width:16px; height:16px; border-radius:4px; appearance:none; -webkit-appearance:none;
+                        background:rgba(255,255,255,0.1); border:1.5px solid rgba(255,255,255,0.3);
+                        cursor:pointer; transition:all 0.2s; flex-shrink:0;"
+                 onclick="
+                   this.style.background  = this.checked ? '#4a7c32' : 'rgba(255,255,255,0.1)';
+                   this.style.borderColor = this.checked ? '#4a7c32' : 'rgba(255,255,255,0.3)';
+                 " />
+          <label for="remember"
+                 class="text-sm cursor-pointer select-none"
+                 style="color: rgba(255,255,255,0.52); font-family: 'DM Sans', sans-serif;">
+            Keep me signed in
+          </label>
+        </div>
+
+        @if (state().error) {
+          <div class="flex items-center gap-2 px-4 py-3 rounded-xl"
+               style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.25);">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"
+                 style="width:16px;height:16px;flex-shrink:0;color:rgba(239,68,68,0.85);">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+            </svg>
+            <p class="text-xs" style="color:rgba(239,68,68,0.85); font-family:'DM Sans',sans-serif;">
+              {{ state().error?.errorMessage ?? 'Invalid credentials. Please try again.' }}
+            </p>
+          </div>
+        }
+
+        <button
+          type="submit"
+          [disabled]="state().loading"
+          class="w-full rounded-xl font-semibold text-sm relative overflow-hidden group/btn hover:scale-[1.015] active:scale-95"
+          style="padding: 16px; background: linear-gradient(135deg, #4a7c32 0%, #6dbf4a 100%);
+                 color: #fff; font-family: 'DM Sans', sans-serif; letter-spacing: 0.05em;
+                 border: none; cursor: pointer; transition: all 0.3s;
+                 box-shadow: 0 4px 28px rgba(74,124,50,0.5); margin-top: 8px;">
+          <span class="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full
+                       transition-transform duration-700 pointer-events-none"
+                style="background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);"></span>
+          <span class="relative z-10 flex items-center justify-center gap-2">
+            @if (state().loading) { Signing in… }
+            @else {
+              Sign in
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   stroke-width="2" stroke="currentColor" style="width:16px;height:16px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            }
+          </span>
+        </button>
+      </form>
+
+      <p class="text-center mt-8 text-sm"
+         style="color: rgba(255,255,255,0.38); font-family: 'DM Sans', sans-serif;">
+        New to EcoEats?
+        <a href="/signup"
+           class="font-semibold ml-1 transition-colors duration-200 hover:text-[#6dbf4a]"
+           style="color: rgba(109,191,74,0.9);">
+          Create an account
+        </a>
+      </p>
+    </div>
+  </div>
+
+</div>

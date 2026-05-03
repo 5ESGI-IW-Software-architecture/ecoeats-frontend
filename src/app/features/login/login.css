@@ -1,0 +1,17 @@
+@keyframes floatA {
+  0%,  100% { transform: translateY(0px)   rotate(0deg);  }
+  33%        { transform: translateY(-18px) rotate(6deg);  }
+  66%        { transform: translateY(10px)  rotate(-4deg); }
+}
+@keyframes floatB {
+  0%,  100% { transform: translateY(0px)   rotate(0deg);  }
+  40%        { transform: translateY(14px)  rotate(-8deg); }
+  70%        { transform: translateY(-20px) rotate(5deg);  }
+}
+
+input::placeholder { color: rgba(255,255,255,0.30); }
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 100px rgba(13,26,15,0.95) inset !important;
+  -webkit-text-fill-color: #fff !important;
+}
