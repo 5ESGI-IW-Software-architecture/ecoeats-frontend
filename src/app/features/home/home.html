@@ -1,1 +1,11 @@
-<p>home works!</p>
+@if (userData()?.role === 'client') {
+  <div>Replace with the client portal root component</div>
+}
+
+@if (userData()?.role === 'deliverer') {
+  <div>Replace with the deliverer portal root component</div>
+}
+
+@if (userData()?.role === 'restaurant') {
+  <div>Replace with the destauratn portal root component</div>
+}

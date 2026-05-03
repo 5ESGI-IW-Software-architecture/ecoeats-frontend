@@ -24,6 +24,11 @@ export interface ApiError {
   exception: unknown;
 }
 
+export type HttpResult<T> = {
+  data: T;
+  message: string;
+};
+
 export function getApiError(httpError: HttpErrorResponse): ApiError {
   return {
     errorCode: httpError.status,

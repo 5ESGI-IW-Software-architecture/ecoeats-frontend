@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal, WritableSignal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { AuthBg } from '../../shared/components/auth-bg/auth-bg';
 import { AuthService } from '../../core/auth/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -6,12 +13,15 @@ import { SignupDto, UserRoles } from '../../core/auth/auth.types';
 import { ComponentState, createState } from '../../core/types/state.types';
 import { executeObservable } from '../../core/utils/observables.utils';
 import { Router } from '@angular/router';
+import { from, switchMap } from 'rxjs';
 
 export enum SignupTabs {
   CLIENT = 'CLIENT',
   RESTAURANT = 'RESTAURANT',
   DELIVERER = 'DELIVERER',
 }
+
+const TABS_WITH_ADDRESS = [SignupTabs.CLIENT, SignupTabs.RESTAURANT];
 
 @Component({
   selector: 'app-signup',
@@ -31,52 +41,56 @@ export class Signup {
   protected readonly state: WritableSignal<ComponentState<void>> = signal(createState<void>());
 
   protected readonly clientForm: FormGroup = this.formBuilder.group({
-    username: this.formBuilder.nonNullable.control('', [Validators.required, Validators.minLength(3)]),
-    email: this.formBuilder.nonNullable.control('', [Validators.required, Validators.email]),
-    password: this.formBuilder.nonNullable.control('', [Validators.required, Validators.minLength(8)]),
-    phoneNumber: this.formBuilder.nonNullable.control('', [Validators.required]),
-    defaultAddress: this.formBuilder.group({
-      streetNumber: this.formBuilder.control<number | null>(null, [Validators.required, Validators.min(1)]),
-      addressLine: this.formBuilder.nonNullable.control('', [Validators.required]),
-      city: this.formBuilder.nonNullable.control('', [Validators.required]),
-      zipCode: this.formBuilder.nonNullable.control('', [Validators.required]),
-      latitude: this.formBuilder.nonNullable.control(0),
-      longitude: this.formBuilder.nonNullable.control(0),
-      addressLineExtra: this.formBuilder.nonNullable.control(''),
-    }),
+    ...this.createUserFields().controls,
+    defaultAddress: this.createAddressFields(),
   });
 
-  protected readonly delivererForm: FormGroup = this.formBuilder.group({
-    username: this.formBuilder.nonNullable.control('', [Validators.required, Validators.minLength(3)]),
-    email: this.formBuilder.nonNullable.control('', [Validators.required, Validators.email]),
-    password: this.formBuilder.nonNullable.control('', [Validators.required, Validators.minLength(8)]),
-    phoneNumber: this.formBuilder.nonNullable.control('', [Validators.required]),
-  });
+  protected readonly delivererForm: FormGroup = this.createUserFields();
 
   protected readonly restaurantForm: FormGroup = this.formBuilder.group({
     restaurantName: this.formBuilder.nonNullable.control('', [Validators.required]),
-    restaurantOwner: this.formBuilder.group({
-      username: this.formBuilder.nonNullable.control('', [Validators.required, Validators.minLength(3)]),
+    restaurantOwner: this.createUserFields(),
+    address: this.createAddressFields(),
+  });
+
+  private createUserFields(): FormGroup {
+    return this.formBuilder.group({
+      username: this.formBuilder.nonNullable.control('', [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
       email: this.formBuilder.nonNullable.control('', [Validators.required, Validators.email]),
-      password: this.formBuilder.nonNullable.control('', [Validators.required, Validators.minLength(8)]),
+      password: this.formBuilder.nonNullable.control('', [
+        Validators.required,
+        Validators.minLength(8),
+      ]),
       phoneNumber: this.formBuilder.nonNullable.control('', [Validators.required]),
-    }),
-    address: this.formBuilder.group({
-      streetNumber: this.formBuilder.control<number | null>(null, [Validators.required, Validators.min(1)]),
+    });
+  }
+
+  private createAddressFields(): FormGroup {
+    return this.formBuilder.group({
+      streetNumber: this.formBuilder.control<number | null>(null, [
+        Validators.required,
+        Validators.min(1),
+      ]),
       addressLine: this.formBuilder.nonNullable.control('', [Validators.required]),
       city: this.formBuilder.nonNullable.control('', [Validators.required]),
       zipCode: this.formBuilder.nonNullable.control('', [Validators.required]),
       latitude: this.formBuilder.nonNullable.control(0),
       longitude: this.formBuilder.nonNullable.control(0),
       addressLineExtra: this.formBuilder.nonNullable.control(''),
-    }),
-  });
+    });
+  }
 
   protected get activeForm(): FormGroup {
     switch (this.activeTab()) {
-      case SignupTabs.CLIENT: return this.clientForm;
-      case SignupTabs.DELIVERER: return this.delivererForm;
-      case SignupTabs.RESTAURANT: return this.restaurantForm;
+      case SignupTabs.CLIENT:
+        return this.clientForm;
+      case SignupTabs.DELIVERER:
+        return this.delivererForm;
+      case SignupTabs.RESTAURANT:
+        return this.restaurantForm;
     }
   }
 
@@ -92,37 +106,74 @@ export class Signup {
       return;
     }
 
-    const role = this.getRole(this.activeTab());
+    const tab = this.activeTab();
+    const geocode$ = TABS_WITH_ADDRESS.includes(tab)
+      ? from(this.geocodeAddress(tab))
+      : from(Promise.resolve(null));
+
     executeObservable(
-      this.authService.signup$(form.getRawValue() as SignupDto, role),
+      geocode$.pipe(
+        switchMap((coords) => {
+          if (coords) this.patchCoords(tab, coords);
+          return this.authService.signup$(form.getRawValue() as SignupDto, this.getRole(tab));
+        }),
+      ),
       {
         state: this.state,
         destroyRef: this.destroyRef,
         onSuccess: () => this.handleSignupSuccess(),
-        onError: () => this.handleSignupFailure(),
       },
     );
   }
 
-  private handleSignupSuccess(): void {
-    let email = '';
-    let password = '';
+  private async geocodeAddress(
+    tab: SignupTabs,
+  ): Promise<{ latitude: number; longitude: number } | null> {
+    const addressGroup =
+      tab === SignupTabs.CLIENT
+        ? this.activeForm.get('defaultAddress')
+        : this.activeForm.get('address');
 
-    if (this.activeTab() === SignupTabs.RESTAURANT) {
-      email = this.restaurantForm.get('restaurantOwner.email')?.value ?? '';
-      password = this.restaurantForm.get('restaurantOwner.password')?.value ?? '';
-    } else {
-      email = this.activeForm.get('email')?.value ?? '';
-      password = this.activeForm.get('password')?.value ?? '';
+    if (!addressGroup) return null;
+
+    const { streetNumber, addressLine, city, zipCode } = addressGroup.value;
+    const query = `${streetNumber} ${addressLine}, ${city}, ${zipCode}`;
+    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1`;
+
+    try {
+      const res = await fetch(url, {
+        headers: { 'Accept-Language': 'en' },
+      });
+      const [result] = await res.json();
+      if (!result) return null;
+
+      return {
+        latitude: parseFloat(result.lat),
+        longitude: parseFloat(result.lon),
+      };
+    } catch {
+      return null;
     }
+  }
 
+  private patchCoords(tab: SignupTabs, coords: { latitude: number; longitude: number }): void {
+    const addressPath = tab === SignupTabs.CLIENT ? 'defaultAddress' : 'address';
+    this.activeForm.get(addressPath)?.patchValue(coords);
+  }
+
+  private handleSignupSuccess(): void {
+    const { email, password } = this.getCredentials();
     this.router.navigate(['/login'], {
-      state: { prefill: { email, password } },
+      state: { prefill: { email, password, userRole: this.getRole(this.activeTab()), displayActivationDialog: true } },
     });
   }
 
-  private handleSignupFailure(): void {
-    // state().error is already populated by executeObservable
+  private getCredentials(): { email: string; password: string } {
+    const prefix = this.activeTab() === SignupTabs.RESTAURANT ? 'restaurantOwner.' : '';
+    return {
+      email: this.activeForm.get(`${prefix}email`)?.value ?? '',
+      password: this.activeForm.get(`${prefix}password`)?.value ?? '',
+    };
   }
 
   private getRole(tab: SignupTabs): UserRoles {

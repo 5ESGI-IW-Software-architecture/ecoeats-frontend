@@ -1,0 +1,36 @@
+import { Address, UserRoles } from '../auth/auth.types';
+
+export type RestaurantUserType = {
+  role: 'restaurant'
+  id: string
+  email: string
+  username: string
+  phoneNumber: string
+  restaurantId: string
+  restaurantName: string
+  restaurantAddress: Address | null
+}
+
+export type DelivererUserType = {
+  role: 'deliverer'
+  id: string
+  email: string
+  username: string
+  phoneNumber: string
+  delivererId: string
+  availability: string
+  isExpert: boolean
+  walletBalance: number
+}
+
+export type ClientUserType = {
+  role: UserRoles
+  id: string
+  email: string
+  username: string
+  phoneNumber: string
+  clientId: string
+  address: Address | null
+}
+
+export type UserType = ClientUserType | DelivererUserType | RestaurantUserType;

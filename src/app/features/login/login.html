@@ -6,8 +6,6 @@
     <div class="h-1 w-full rounded-t-2xl"
          style="background: linear-gradient(90deg, #4a7c32, #d4881e, #4a7c32);"></div>
 
-
-
     <div class="rounded-b-2xl px-10 pt-10 pb-12"
          style="background: rgba(255,255,255,0.05);
                 backdrop-filter: blur(28px);
@@ -27,6 +25,22 @@
           Fresh &nbsp;·&nbsp; Sustainable &nbsp;·&nbsp; Delivered
         </p>
       </div>
+
+      @if (displaySuccessMessage()) {
+        <div class="flex items-center gap-3 px-4 py-3 rounded-xl mb-2"
+             style="background: rgba(74,124,50,0.1); border: 1px solid rgba(109,191,74,0.25);">
+    <span style="flex-shrink:0; color: #6dbf4a;">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke-width="1.8" stroke="currentColor" style="width:18px;height:18px;">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      </svg>
+    </span>
+          <p class="text-xs" style="color: rgba(109,191,74,0.9); font-family: 'DM Sans', sans-serif;">
+            Your account has been activated! You can now sign in.
+          </p>
+        </div>
+      }
 
       <div class="flex gap-1 mb-8 p-1 rounded-xl"
            style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.07);">

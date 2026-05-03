@@ -1,0 +1,100 @@
+<div class="fixed inset-0 z-40"
+     style="background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);">
+</div>
+
+<div class="fixed inset-0 z-50 flex items-center justify-center px-4">
+  <div class="relative w-full max-w-md">
+
+    <div class="h-1 w-full rounded-t-2xl"
+         style="background: linear-gradient(90deg, #4a7c32, #d4881e, #4a7c32);"></div>
+
+    <div class="rounded-b-2xl px-10 pt-10 pb-12"
+         style="background: rgba(13,26,15,0.97);
+                backdrop-filter: blur(28px);
+                -webkit-backdrop-filter: blur(28px);
+                border: 1px solid rgba(255,255,255,0.1);
+                border-top: none;
+                box-shadow: 0 32px 80px rgba(0,0,0,0.85);">
+
+      <div class="flex flex-col items-center mb-8">
+        <div class="flex items-center justify-center w-16 h-16 rounded-2xl mb-6"
+             style="background: linear-gradient(135deg, rgba(74,124,50,0.2), rgba(109,191,74,0.1));
+                    border: 1px solid rgba(109,191,74,0.25);">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke-width="1.5" stroke="#6dbf4a" style="width:32px;height:32px;">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+          </svg>
+        </div>
+
+        <h2 class="text-2xl font-semibold text-white mb-2 text-center"
+            style="font-family: 'Playfair Display', Georgia, serif;">
+          Check your inbox
+        </h2>
+        <p class="text-sm text-center leading-relaxed"
+           style="color: rgba(255,255,255,0.45); font-family: 'DM Sans', sans-serif; max-width: 280px;">
+          We sent a 6-digit activation code to
+          <span style="color: rgba(109,191,74,0.9); font-weight: 600;">{{ email }}</span>.
+        </p>
+      </div>
+
+      <div class="mb-8">
+        <div class="relative">
+          <input
+            type="text"
+            inputmode="numeric"
+            maxlength="6"
+            placeholder="_ _ _ _ _ _"
+            [(ngModel)]="code"
+            style="width:100%; padding: 14px 16px 14px 44px; border-radius: 12px;
+         background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.18);
+         color: #fff; font-size: 22px; font-family: 'DM Sans', sans-serif;
+         outline: none; transition: border-color 0.25s, background 0.25s;
+         letter-spacing: 0.5em; text-align: center;"
+            onfocus="this.style.borderColor='rgba(109,191,74,0.75)'; this.style.background='rgba(255,255,255,0.13)'; this.style.boxShadow='0 0 0 3px rgba(109,191,74,0.15)';"
+            onblur="this.style.borderColor='rgba(255,255,255,0.18)'; this.style.background='rgba(255,255,255,0.08)'; this.style.boxShadow='none';"
+          />
+        </div>
+
+        @if (validationError() || state().error) {
+          <div class="flex items-center gap-2 px-4 py-3 rounded-xl mt-3"
+               style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.25);">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"
+                 style="width:16px;height:16px;flex-shrink:0;color:rgba(239,68,68,0.85);">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+            </svg>
+            <p class="text-xs" style="color:rgba(239,68,68,0.85); font-family:'DM Sans',sans-serif;">
+              {{ validationError() ?? state().error?.errorMessage ?? 'Invalid code. Please try again.' }}
+            </p>
+          </div>
+        }
+      </div>
+
+      <button
+        type="button"
+        (click)="handleVerifyClick()"
+        [disabled]="state().loading"
+        class="w-full rounded-xl font-semibold text-sm relative overflow-hidden group/btn hover:scale-[1.015] active:scale-95"
+        style="padding: 16px;
+               background: linear-gradient(135deg, #4a7c32 0%, #6dbf4a 100%);
+               color: #fff; font-family: 'DM Sans', sans-serif; letter-spacing: 0.05em;
+               border: none; cursor: pointer; transition: all 0.3s;
+               box-shadow: 0 4px 28px rgba(74,124,50,0.5);">
+        <span class="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full
+                     transition-transform duration-700 pointer-events-none"
+              style="background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);"></span>
+        <span class="relative z-10 flex items-center justify-center gap-2">
+
+            Activate account
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                 stroke-width="2" stroke="currentColor" style="width:16px;height:16px;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+            </svg>
+
+        </span>
+      </button>
+
+    </div>
+  </div>
+</div>

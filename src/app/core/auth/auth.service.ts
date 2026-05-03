@@ -1,29 +1,51 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from '../http/api.service';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, switchMap, tap } from 'rxjs';
 import { AuthTokens, LoginDto, SignupDto, UserRoles } from './auth.types';
+import { HttpResult } from '../types/api.types';
+import { UserType } from '../types/user.type';
+import { AuthStore } from '../../store/auth.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly apiService: ApiService = inject(ApiService);
+  private readonly authStore = inject(AuthStore);
 
-  signup$(payload: SignupDto, userRole: UserRoles): Observable<void> {
+  signup$(payload: SignupDto, userRole: UserRoles): Observable<HttpResult<void>> {
     switch (userRole) {
       case 'client':
-        return this.apiService.post<SignupDto, void>('clients', payload);
+        return this.apiService.post<SignupDto, HttpResult<void>>('clients', payload);
       case 'deliverer':
-        return this.apiService.post<SignupDto, void>('deliverers', payload);
+        return this.apiService.post<SignupDto, HttpResult<void>>('deliverers', payload);
       case 'restaurant':
-        return this.apiService.post<SignupDto, void>('restaurants', payload);
+        return this.apiService.post<SignupDto, HttpResult<void>>('restaurants', payload);
     }
   }
 
-  login$(payload: LoginDto): Observable<AuthTokens> {
+  login$(payload: LoginDto): Observable<UserType> {
     return this.apiService.post<LoginDto, AuthTokens>('auth/login', payload).pipe(
-      tap((tokens: AuthTokens) => this.saveTokens(tokens)),
-    )
+      tap((tokens) => this.saveTokens(tokens)),
+      switchMap(() => this.me$()),
+      tap((user) => this.authStore.setUser(user)),
+    );
+  }
+
+  activate$(email: string, activationCode: number): Observable<HttpResult<void>> {
+    return this.apiService.post<{ email: string; activationCode: number }, HttpResult<void>>(
+      'auth/activate',
+      {
+        activationCode: activationCode,
+        email: email,
+      },
+    );
+  }
+
+  me$(): Observable<UserType> {
+    return this.apiService
+      .get<HttpResult<UserType>>('auth/me')
+      .pipe(map((response) => response.data));
   }
 
   saveTokens(tokens: AuthTokens) {
@@ -33,6 +55,11 @@ export class AuthService {
 
   getAccessTokens() {
     return localStorage.getItem('access_token');
+  }
+
+  clearTokens(): void {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
   }
 
   getRefreshTokens() {
