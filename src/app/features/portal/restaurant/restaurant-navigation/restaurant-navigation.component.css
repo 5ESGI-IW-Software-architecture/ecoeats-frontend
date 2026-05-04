@@ -1,0 +1,5 @@
+.nav-active {
+  background: linear-gradient(135deg, #4a7c32, #6dbf4a) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(74, 124, 50, 0.4);
+}
