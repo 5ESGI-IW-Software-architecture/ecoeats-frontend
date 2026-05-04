@@ -14,7 +14,7 @@ export function checkRole(
 
   if (user) {
     if (user.role !== role) {
-      router.navigate(['/']);
+      router.navigate([`/${user.role.toLowerCase()}`]);
       return false;
     }
     return true;

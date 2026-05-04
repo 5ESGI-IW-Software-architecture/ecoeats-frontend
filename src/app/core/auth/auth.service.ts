@@ -25,7 +25,8 @@ export class AuthService {
   }
 
   login$(payload: LoginDto): Observable<UserType> {
-    return this.apiService.post<LoginDto, AuthTokens>('auth/login', payload).pipe(
+    return this.apiService.post<LoginDto, HttpResult<AuthTokens>>('auth/login', payload).pipe(
+      map((response) => response.data),
       tap((tokens) => this.saveTokens(tokens)),
       switchMap(() => this.me$()),
       tap((user) => this.authStore.setUser(user)),

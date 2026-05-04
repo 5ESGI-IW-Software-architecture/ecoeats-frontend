@@ -76,8 +76,17 @@ export class Login implements OnInit {
     executeObservable(this.authService.login$(payload), {
       state: this.state,
       destroyRef: this.destroyRef,
-      onSuccess: () => this.router.navigate(['/']),
+      onSuccess: (user) => this.redirectByRole(user.role),
     });
+  }
+
+  private redirectByRole(role: UserRoles): void {
+    const map: Record<UserRoles, string> = {
+      client: '/client',
+      restaurant: '/restaurant/',
+      deliverer: '/deliverer',
+    };
+    this.router.navigate([map[role]]);
   }
 
   private getUserRoles(tab: SignupTabs): UserRoles {

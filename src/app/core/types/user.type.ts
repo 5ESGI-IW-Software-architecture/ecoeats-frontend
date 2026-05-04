@@ -9,6 +9,7 @@ export type RestaurantUserType = {
   restaurantId: string
   restaurantName: string
   restaurantAddress: Address | null
+  dailyStockResetTime?: string
 }
 
 export type DelivererUserType = {
