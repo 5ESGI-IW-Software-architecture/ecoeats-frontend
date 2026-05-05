@@ -14,7 +14,7 @@ import { AuthStore } from '../../../../store/auth.store';
 import { RestaurantUserType } from '../../../../core/types/user.type';
 import { ComponentState, createState } from '../../../../core/types/state.types';
 import { executeObservable } from '../../../../core/utils/observables.utils';
-import { AllergenType, CreatePlateRequest, PlateResponse, UpdatePlateRequest } from './restaurant-menu.types';
+import { AllergenType, CreatePlateRequest, PlateResponse, UpdatePlateRequest } from '../types/restaurant-menu.types';
 
 @Component({
   selector: 'app-restaurant-menu',

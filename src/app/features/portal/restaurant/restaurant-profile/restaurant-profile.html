@@ -152,6 +152,17 @@
     </div>
 
     <div class="profile-card__body" [formGroup]="addressForm">
+      @if (isEditMode()) {
+        <div class="profile-field profile-field--full" style="margin-bottom: 4px;">
+          <label class="field-label">Search address</label>
+          <app-address-autocomplete
+            placeholder="Type an address to autofill fields…"
+            inputClass="field-input"
+            (addressSelected)="onAddressSelected($event)"
+          />
+        </div>
+      }
+
       <div class="profile-fields-grid">
 
         <div class="profile-field">

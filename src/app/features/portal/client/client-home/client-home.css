@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+.header-accent-line {
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 120px; height: 1px;
+  background: linear-gradient(90deg, #6dbf4a, transparent);
+}
+
+.restaurant-card:hover {
+  border-color: rgba(109,191,74,0.25) !important;
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.035) !important;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(109,191,74,0.08) inset;
+}
+
+.restaurant-card:hover .restaurant-card__img { transform: scale(1.06); }
+.restaurant-card:hover .card-arrow {
+  background: rgba(109,191,74,0.15) !important;
+  border-color: rgba(109,191,74,0.3) !important;
+  transform: translateX(2px);
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.03) 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+.restaurant-card__placeholder {
+  background: radial-gradient(ellipse at 50% 80%, rgba(109,191,74,0.06) 0%, transparent 70%),
+  linear-gradient(145deg, #0d1f0d 0%, #071407 100%);
+}

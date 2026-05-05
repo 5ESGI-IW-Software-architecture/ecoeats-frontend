@@ -1,16 +1,11 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { restaurantGuard } from './core/guards/restaurant.guard';
+import { clientGuard } from './core/guards/client.guard';
 
 export const routes: Routes = [
   { path: 'login', loadComponent: () => import('./features/login/login').then((c) => c.Login) },
   { path: 'signup', loadComponent: () => import('./features/signup/signup').then((c) => c.Signup) },
-  {
-    path: '',
-    loadComponent: () => import('./features/home/home').then((c) => c.Home),
-    canActivate: [authGuard],
-  },
-
   // Restaurant
   {
     path: 'restaurant',
@@ -49,6 +44,30 @@ export const routes: Routes = [
             (c) => c.ActiveOrders,
           ),
       },
+    ],
+  },
+  // Client Routes ============
+  {
+    path: 'portal',
+    loadComponent: () =>
+      import('./features/portal/client/client-shell/client-shell').then((c) => c.ClientShell),
+    canActivate: [authGuard, clientGuard],
+    children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./features/portal/client/client-home/client-home').then((c) => c.ClientHome),
+        canActivate: [authGuard, clientGuard],
+      },
+      {
+        path: 'restaurant/:id',
+        loadComponent: () =>
+          import('./features/portal/client/restaurant/restaurant').then(
+            (c) => c.Restaurant,
+          ),
+        canActivate: [authGuard, clientGuard],
+      }
     ],
   },
 

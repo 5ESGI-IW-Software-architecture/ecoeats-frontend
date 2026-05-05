@@ -7,7 +7,7 @@ import {
   RestaurantProfileResponse,
   SetResetTimeDto,
   UpdateRestaurantDto,
-} from './restaurant-profile.types';
+} from '../types/restaurant-profile.types';
 
 @Injectable({ providedIn: 'root' })
 export class RestaurantProfileService {

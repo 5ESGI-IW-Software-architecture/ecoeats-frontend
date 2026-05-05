@@ -8,19 +8,20 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AddressAutocomplete, PhotonAddress } from '../../../../shared/components/address-autocomplete/address-autocomplete';
 import { from, switchMap } from 'rxjs';
 import { AuthStore } from '../../../../store/auth.store';
 import { RestaurantUserType } from '../../../../core/types/user.type';
 import { ComponentState, createState } from '../../../../core/types/state.types';
 import { executeObservable } from '../../../../core/utils/observables.utils';
 import { RestaurantProfileService } from './restaurant-profile.service';
-import { RestaurantProfileResponse } from './restaurant-profile.types';
+import { RestaurantProfileResponse } from '../types/restaurant-profile.types';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-restaurant-profile',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AddressAutocomplete],
   templateUrl: './restaurant-profile.html',
   styleUrl: './restaurant-profile.css',
   standalone: true,
@@ -170,6 +171,15 @@ export class RestaurantProfile implements OnInit {
       }),
       { state: this.identityState, destroyRef: this.destroyRef },
     );
+  }
+
+  protected onAddressSelected(addr: PhotonAddress): void {
+    this.addressForm.patchValue({
+      streetNumber: addr.streetNumber ? parseInt(addr.streetNumber, 10) : 0,
+      addressLine: addr.addressLine,
+      city: addr.city,
+      zipCode: addr.zipCode,
+    });
   }
 
   protected onSaveAddress(): void {

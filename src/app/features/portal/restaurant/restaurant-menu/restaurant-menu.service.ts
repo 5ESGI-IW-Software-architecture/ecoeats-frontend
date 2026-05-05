@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ApiService } from '../../../../core/http/api.service';
 import { HttpResult } from '../../../../core/types/api.types';
-import { CreatePlateRequest, PlateResponse, UpdatePlateRequest } from './restaurant-menu.types';
+import { CreatePlateRequest, PlateResponse, UpdatePlateRequest } from '../types/restaurant-menu.types';
 
 @Injectable({ providedIn: 'root' })
 export class RestaurantMenuService {

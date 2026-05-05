@@ -37,4 +37,6 @@ export type CreatePlateRequest = {
   allergens?: string[];
 };
 
+
+
 export type UpdatePlateRequest = Partial<CreatePlateRequest>;

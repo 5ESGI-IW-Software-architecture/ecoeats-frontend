@@ -93,7 +93,9 @@
 
     <div class="w-px h-5 mx-2" style="background: rgba(255,255,255,0.1);"></div>
 
-    <button type="button"
+    <button
+      (click)="handleLogout()"
+      type="button"
             class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-250"
             style="font-family: 'DM Sans', sans-serif; letter-spacing: 0.04em; border: none; cursor: pointer;
                    background: rgba(239,68,68,0.08); color: rgba(239,68,68,0.85);
