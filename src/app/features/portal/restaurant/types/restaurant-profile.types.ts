@@ -1,3 +1,5 @@
+import { Address } from '../../../../core/auth/auth.types';
+
 export type RestaurantProfileResponse = {
   id: string;
   name: string;
@@ -38,4 +40,16 @@ export type SetResetTimeDto = {
 export type ChangePasswordDto = {
   currentPassword: string;
   newPassword: string;
+};
+
+export type RestaurantWithDistance = {
+  distance: number;
+  restaurant: RestaurantInfoType;
+};
+
+export type RestaurantInfoType = {
+  id: string;
+  name: string;
+  address: Address;
+  imageUrl: string | null;
 };

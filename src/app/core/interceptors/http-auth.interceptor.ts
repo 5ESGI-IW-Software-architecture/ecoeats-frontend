@@ -4,13 +4,23 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { EMPTY, catchError, throwError } from 'rxjs';
 
-const PUBLIC_URLS = ['/auth/login', '/auth/signup', '/auth/activate'];
+const PUBLIC_ROUTES: { url: string; method: string }[] = [
+  { url: '/api/auth/login', method: 'POST' },
+  { url: '/api/auth/activate', method: 'POST' },
+  { url: '/api/restaurants', method: 'POST' },
+  { url: '/api/deliverers', method: 'POST' },
+  { url: '/api/clients', method: 'POST' },
+];
 
 export const httpAuthInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  const isPublic = PUBLIC_URLS.some((url) => req.url.includes(url));
+  const path = new URL(req.url).pathname;
+
+  const isPublic = PUBLIC_ROUTES.some((route) => req.method == route.method && path == route.url);
+  console.log(path, isPublic)
+
   if (isPublic) return next(req);
 
   const accessToken = authService.getAccessTokens();

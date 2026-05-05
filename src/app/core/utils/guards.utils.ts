@@ -14,7 +14,8 @@ export function checkRole(
 
   if (user) {
     if (user.role !== role) {
-      router.navigate([`/${user.role.toLowerCase()}`]);
+      console.log(user.role)
+      router.navigate([`/${user.role.toLowerCase()}s`]);
       return false;
     }
     return true;
@@ -24,7 +25,7 @@ export function checkRole(
     tap((fetchedUser) => authStore.setUser(fetchedUser)),
     map((fetchedUser) => {
       if (fetchedUser.role !== role) {
-        router.navigate(['/']);
+        router.navigate([`${fetchedUser.role.toLowerCase()}s`]);
         return false;
       }
       return true;

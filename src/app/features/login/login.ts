@@ -82,7 +82,7 @@ export class Login implements OnInit {
 
   private redirectByRole(role: UserRoles): void {
     const map: Record<UserRoles, string> = {
-      client: '/client',
+      client: '/portal/',
       restaurant: '/restaurant/',
       deliverer: '/deliverer',
     };

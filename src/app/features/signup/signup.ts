@@ -7,6 +7,7 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { AuthBg } from '../../shared/components/auth-bg/auth-bg';
+import { AddressAutocomplete, PhotonAddress } from '../../shared/components/address-autocomplete/address-autocomplete';
 import { AuthService } from '../../core/auth/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SignupDto, UserRoles } from '../../core/auth/auth.types';
@@ -25,7 +26,7 @@ const TABS_WITH_ADDRESS = [SignupTabs.CLIENT, SignupTabs.RESTAURANT];
 
 @Component({
   selector: 'app-signup',
-  imports: [AuthBg, ReactiveFormsModule],
+  imports: [AuthBg, ReactiveFormsModule, AddressAutocomplete],
   templateUrl: './signup.html',
   styleUrl: './signup.css',
   standalone: true,
@@ -94,6 +95,28 @@ export class Signup {
     }
   }
 
+  onClientAddressSelected(addr: PhotonAddress): void {
+    this.clientForm.get('defaultAddress')?.patchValue({
+      streetNumber: addr.streetNumber ? parseInt(addr.streetNumber, 10) : null,
+      addressLine: addr.addressLine,
+      city: addr.city,
+      zipCode: addr.zipCode,
+      latitude: addr.latitude,
+      longitude: addr.longitude,
+    });
+  }
+
+  onRestaurantAddressSelected(addr: PhotonAddress): void {
+    this.restaurantForm.get('address')?.patchValue({
+      streetNumber: addr.streetNumber ? parseInt(addr.streetNumber, 10) : null,
+      addressLine: addr.addressLine,
+      city: addr.city,
+      zipCode: addr.zipCode,
+      latitude: addr.latitude,
+      longitude: addr.longitude,
+    });
+  }
+
   setTab(tab: SignupTabs): void {
     this.activeTab.set(tab);
     this.state.set(createState<void>());
@@ -122,8 +145,9 @@ export class Signup {
         state: this.state,
         destroyRef: this.destroyRef,
         onSuccess: () => this.handleSignupSuccess(),
+        onError: (error) => console.error('Signup failed:', error),
       },
-    );
+    )
   }
 
   private async geocodeAddress(
@@ -162,9 +186,10 @@ export class Signup {
   }
 
   private handleSignupSuccess(): void {
+    console.log('Success !')
     const { email, password } = this.getCredentials();
     this.router.navigate(['/login'], {
-      state: { prefill: { email, password, userRole: this.getRole(this.activeTab()), displayActivationDialog: true } },
+     state: { prefill: { email, password, userRole: this.getRole(this.activeTab()), displayActivationDialog: true } },
     });
   }
 

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from '../http/api.service';
 import { map, Observable, switchMap, tap } from 'rxjs';
-import { AuthTokens, LoginDto, SignupDto, UserRoles } from './auth.types';
+import { AuthTokens, ClientSignup, LoginDto, SignupDto, UserRoles } from './auth.types';
 import { HttpResult } from '../types/api.types';
 import { UserType } from '../types/user.type';
 import { AuthStore } from '../../store/auth.store';
@@ -16,7 +16,11 @@ export class AuthService {
   signup$(payload: SignupDto, userRole: UserRoles): Observable<HttpResult<void>> {
     switch (userRole) {
       case 'client':
-        return this.apiService.post<SignupDto, HttpResult<void>>('clients', payload);
+        const clientPayload = {
+          ...payload,
+          defaultDeliveryAddress: (payload as ClientSignup).defaultAddress
+        }
+        return this.apiService.post<SignupDto, HttpResult<void>>('clients', clientPayload);
       case 'deliverer':
         return this.apiService.post<SignupDto, HttpResult<void>>('deliverers', payload);
       case 'restaurant':
