@@ -1,0 +1,49 @@
+<div class="autocomplete-wrapper">
+  <div class="autocomplete-input-row">
+    <span class="autocomplete-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke-width="1.8" stroke="currentColor" style="width:16px;height:16px;">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+      </svg>
+    </span>
+
+    <input
+      type="text"
+      autocomplete="off"
+      [placeholder]="placeholder"
+      [value]="query()"
+      (input)="onInput($event)"
+      class="autocomplete-input {{ inputClass }}"
+    />
+
+    @if (loading()) {
+      <span class="autocomplete-spinner"></span>
+    }
+  </div>
+
+  @if (open() && suggestions().length > 0) {
+    <ul class="autocomplete-dropdown" role="listbox">
+      @for (feature of suggestions(); track $index) {
+        <li
+          class="autocomplete-item"
+          role="option"
+          (click)="select(feature)"
+          (keydown.enter)="select(feature)"
+          tabindex="0"
+        >
+          <span class="autocomplete-item__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                 stroke-width="1.8" stroke="currentColor" style="width:14px;height:14px;">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+            </svg>
+          </span>
+          <span class="autocomplete-item__label">{{ formatLabel(feature) }}</span>
+        </li>
+      }
+    </ul>
+  }
+</div>
