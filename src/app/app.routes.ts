@@ -2,8 +2,10 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { restaurantGuard } from './core/guards/restaurant.guard';
 import { clientGuard } from './core/guards/client.guard';
+import { roleRedirectGuard } from './core/guards/role-redirect.guard';
 
 export const routes: Routes = [
+  { path: '' , pathMatch: 'full', canActivate: [roleRedirectGuard], children: []},
   { path: 'login', loadComponent: () => import('./features/login/login').then((c) => c.Login) },
   { path: 'signup', loadComponent: () => import('./features/signup/signup').then((c) => c.Signup) },
   // Restaurant
@@ -66,6 +68,11 @@ export const routes: Routes = [
           import('./features/portal/client/restaurant/restaurant').then(
             (c) => c.Restaurant,
           ),
+        canActivate: [authGuard, clientGuard],
+      },
+      {
+        path: 'order/payment/:orderId',
+        loadComponent: () => import('./features/portal/client/order-payment/order-payment').then(c => c.OrderPayment),
         canActivate: [authGuard, clientGuard],
       }
     ],

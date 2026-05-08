@@ -1,0 +1,93 @@
+<div class="fixed inset-0 z-40"
+     style="background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);">
+</div>
+
+<div class="fixed inset-0 z-50 flex items-center justify-center px-4">
+  <div class="relative w-full max-w-sm">
+
+    @switch (data.variant) {
+      @case ('success') {
+        <div class="h-1 w-full rounded-t-2xl"
+             style="background: linear-gradient(90deg, #4a7c32, #6dbf4a, #4a7c32);"></div>
+      }
+      @case ('warning') {
+        <div class="h-1 w-full rounded-t-2xl"
+             style="background: linear-gradient(90deg, #4a7c32, #d4881e, #4a7c32);"></div>
+      }
+      @case ('error') {
+        <div class="h-1 w-full rounded-t-2xl"
+             style="background: linear-gradient(90deg, #7f1d1d, #ef4444, #7f1d1d);"></div>
+      }
+    }
+
+    <div class="rounded-b-2xl px-8 pt-8 pb-8"
+         style="background: rgba(13,26,15,0.97);
+                backdrop-filter: blur(28px);
+                -webkit-backdrop-filter: blur(28px);
+                border: 1px solid rgba(255,255,255,0.1);
+                border-top: none;
+                box-shadow: 0 32px 80px rgba(0,0,0,0.85);">
+
+      <!-- Close button -->
+      <div class="flex justify-end mb-4">
+        <button (click)="close()"
+                class="w-7 h-7 rounded-lg flex items-center justify-center"
+                style="background: rgba(255,255,255,0.05);
+                       border: 1px solid rgba(255,255,255,0.08);
+                       color: rgba(255,255,255,0.4);
+                       cursor: pointer;
+                       transition: all 0.15s ease;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Icon + Message -->
+      <div class="flex flex-col items-center text-center gap-5">
+
+        @switch (data.variant) {
+          @case ('success') {
+            <div class="flex items-center justify-center w-14 h-14 rounded-2xl"
+                 style="background: rgba(109,191,74,0.1); border: 1px solid rgba(109,191,74,0.25);">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   stroke-width="1.5" stroke="#6dbf4a" style="width:28px;height:28px;">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+            </div>
+          }
+          @case ('warning') {
+            <div class="flex items-center justify-center w-14 h-14 rounded-2xl"
+                 style="background: rgba(212,136,30,0.1); border: 1px solid rgba(212,136,30,0.25);">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   stroke-width="1.5" stroke="#d4881e" style="width:28px;height:28px;">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+              </svg>
+            </div>
+          }
+          @case ('error') {
+            <div class="flex items-center justify-center w-14 h-14 rounded-2xl"
+                 style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25);">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   stroke-width="1.5" stroke="#ef4444" style="width:28px;height:28px;">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+              </svg>
+            </div>
+          }
+        }
+
+        <p class="text-[14px] leading-relaxed"
+           style="color: rgba(255,255,255,0.6);
+                  font-family: 'DM Sans', sans-serif;
+                  max-width: 260px;">
+          {{ data.message }}
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>
