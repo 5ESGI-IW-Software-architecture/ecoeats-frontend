@@ -340,6 +340,20 @@
         }
 
         @if (cartItems().length > 0) {
+
+          <div class="px-6 py-3 shrink-0"
+               style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full"
+                 style="background: rgba(109,191,74,0.06); border: 1px solid rgba(109,191,74,0.15);">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 animate-pulse"
+                    style="background: #6dbf4a;"></span>
+                      <span class="text-[11px] font-semibold tracking-[0.08em] uppercase truncate"
+                            style="color: rgba(109,191,74,0.8); max-width: 180px;">
+                {{ cartRestaurant()?.name ?? '—' }}
+              </span>
+            </div>
+          </div>
+
           <div class="flex flex-col divide-y flex-1 overflow-y-auto min-h-0"
                style="border-color:rgba(255,255,255,0.05); scrollbar-width:thin; scrollbar-color:rgba(109,191,74,0.12) transparent;">
             @for (item of cartItems(); track item.plateId) {
@@ -369,20 +383,20 @@
                 </div>
 
                 <div class="flex items-center gap-1.5 shrink-0">
-                  <button (click)="decrement(item.plate.id)"
+                  <button (click)="decrement(item.plateId)"
                           class="cart-qty-btn w-7 h-7 rounded-md flex items-center justify-center text-[14px] font-bold"
                           style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.5);">
                     −
                   </button>
                   <span class="text-[13px] font-bold w-5 text-center" style="color:#6dbf4a;">{{ item.quantity }}</span>
-                  <button (click)="increment(item.plate.id)"
+                  <button (click)="increment(item.plateId)"
                           class="cart-qty-btn w-7 h-7 rounded-md flex items-center justify-center text-[14px] font-bold"
                           style="background:rgba(109,191,74,0.1); border:1px solid rgba(109,191,74,0.2); color:#6dbf4a;">
                     +
                   </button>
                 </div>
 
-                <button (click)="removeFromCart(item.plate.id)"
+                <button (click)="removeFromCart(item.plateId)"
                         class="cart-remove-btn w-7 h-7 rounded-md flex items-center justify-center shrink-0"
                         style="color:rgba(255,255,255,0.2); border:1px solid transparent; transition:all 0.15s ease;">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -401,7 +415,9 @@
                 {{ cartTotal() | currency: 'EUR' : 'symbol' : '1.2-2' }}
               </span>
             </div>
-            <button class="checkout-btn w-full py-3.5 rounded-[14px] text-[14px] font-bold tracking-[0.06em]"
+            <button
+              (click)="submitOrder()"
+              class="checkout-btn w-full py-3.5 rounded-[14px] text-[14px] font-bold tracking-[0.06em]"
                     style="background:linear-gradient(135deg, #6dbf4a 0%, #5aad38 100%); color:#0d1a0f; border:none; cursor:pointer; transition:all 0.2s ease;">
               Place Order · {{ cartCount() }} item{{ cartCount() === 1 ? '' : 's' }}
             </button>

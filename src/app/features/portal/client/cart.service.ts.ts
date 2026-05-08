@@ -12,6 +12,7 @@ type CreateCartPayload = {
 type AddItemPayload = {
   plateId: string;
   plateQuantity: number;
+  restaurantId: string;
 };
 
 @Injectable({
@@ -21,9 +22,7 @@ export class CartService {
   private readonly apiService = inject(ApiService);
 
   getCartState$(): Observable<any> {
-    return this.apiService
-      .get<HttpResult<any>>('carts/')
-      .pipe(map((response) => response.data));
+    return this.apiService.get<HttpResult<any>>('carts/').pipe(map((response) => response.data));
   }
 
   createCart$(payload: CreateCartPayload): Observable<any> {
@@ -50,9 +49,9 @@ export class CartService {
       .pipe(switchMap(() => this.getCartState$()));
   }
 
-  removeItem$(plateId: string): Observable<any> {
+  removeItem$(plateId: string, quantity: number): Observable<any> {
     return this.apiService
-      .delete<HttpResult<void>>(`carts/items/${plateId}`)
+      .delete<HttpResult<void>>(`carts/items/${plateId}`, { quantity: quantity.toString() })
       .pipe(switchMap(() => this.getCartState$()));
   }
 

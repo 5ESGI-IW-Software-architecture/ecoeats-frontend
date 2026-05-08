@@ -1,0 +1,433 @@
+
+@if (orderState().loading) {
+  <div class="fixed inset-0 flex items-center justify-center"
+       style="font-family:'DM Sans',sans-serif; background:#0d1a0f; color:#fff;">
+    <div class="flex flex-col items-center gap-4">
+      <div class="w-12 h-12 rounded-full border-2 border-transparent animate-spin"
+           style="border-top-color:#6dbf4a; border-right-color:rgba(109,191,74,0.3);"></div>
+      <p class="text-[13px] font-semibold tracking-[0.1em] uppercase" style="color:rgba(109,191,74,0.6);">
+        Loading your order…
+      </p>
+    </div>
+  </div>
+}
+
+@if (orderState().error) {
+  <div class="fixed inset-0 flex items-center justify-center"
+       style="font-family:'DM Sans',sans-serif; background:#0d1a0f; color:#fff;">
+    <div class="flex flex-col items-center gap-5 text-center px-6 max-w-md">
+
+      <div class="relative">
+        <div class="absolute inset-0 rounded-full opacity-20 blur-xl"
+             style="background:rgba(239,68,68,0.4); transform:scale(2.5);"></div>
+        <div class="relative w-18 h-18 rounded-full flex items-center justify-center"
+             style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.18);">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke-width="1.4" stroke="rgba(239,68,68,0.65)" class="w-8 h-8">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1.5 w-full" >
+        <h2 class="text-2xl font-bold"
+            style="font-family:'Playfair Display',serif; color:rgba(255,255,255,0.85); letter-spacing:-0.01em;">
+          This order no longer exists !
+        </h2>
+        <p class="text-md leading-relaxed w-full" style="color:rgba(255,255,255,0.35);">
+          This order may have expired or been cancelled. Please place a new order from the restaurant.
+        </p>
+      </div>
+
+      <a routerLink="/portal/home"
+         class="inline-flex items-center gap-2 mt-1 px-6 py-3 rounded-[12px] text-[12px] font-semibold tracking-[0.06em] uppercase"
+         style="background:linear-gradient(135deg, #6dbf4a 0%, #5aad38 100%); color:#0d1a0f; text-decoration:none; transition:all 0.2s ease;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+             stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>
+        Browse Restaurants
+      </a>
+
+    </div>
+  </div>
+}
+
+@if (orderState().data; as order) {
+  <div class="fixed inset-0 flex flex-col overflow-hidden"
+       style="font-family:'DM Sans',sans-serif; color:#fff; background:#0d1a0f;">
+    <div class="shrink-0 flex items-center justify-between px-10 py-5"
+         style="border-bottom:1px solid rgba(255,255,255,0.06);">
+      <div class="flex items-center gap-4">
+        <a routerLink="/portal/home"
+           class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-[12px] font-semibold tracking-[0.06em] uppercase"
+           style="background:rgba(13,26,15,0.65); border:1px solid rgba(109,191,74,0.22); color:rgba(255,255,255,0.8); backdrop-filter:blur(8px); text-decoration:none; transition:all 0.2s ease;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+          </svg>
+          Back
+        </a>
+        <div class="flex flex-col gap-0.5">
+          <h1 class="text-[22px] font-bold leading-none"
+              style="font-family:'Playfair Display',serif; letter-spacing:-0.02em;">
+            Checkout
+          </h1>
+          <p class="text-[11px] font-light" style="color:rgba(255,255,255,0.35);">
+            Order #{{ order.id.slice(0, 8).toUpperCase() }}
+          </p>
+        </div>
+      </div>
+
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full"
+           style="background:rgba(109,191,74,0.06); border:1px solid rgba(109,191,74,0.15);">
+        <span class="w-1.5 h-1.5 rounded-full shrink-0 animate-pulse" style="background:#6dbf4a;"></span>
+        <span class="text-[11px] font-semibold tracking-[0.08em] uppercase"
+              style="color:rgba(109,191,74,0.8);">
+          {{ order.restaurantName }}
+        </span>
+      </div>
+    </div>
+
+    <div class="flex gap-6 flex-1 overflow-hidden min-h-0 px-10 py-6">
+      <div class="flex-1 min-w-0 flex flex-col gap-4 overflow-hidden">
+        <div class="flex-1 min-h-0 rounded-[20px] overflow-hidden flex flex-col"
+             style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.07);">
+          <div class="relative flex-1 min-h-0" style="background:#071407;">
+            <iframe
+              [src]="mapRawUrl() | safeUrl"
+              class="w-full h-full border-0"
+              style="filter:invert(1) hue-rotate(180deg) brightness(0.95) contrast(1.1) saturate(0.3);"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen>
+            </iframe>
+            <div class="absolute bottom-3 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full"
+                 style="background:rgba(13,26,15,0.85); border:1px solid rgba(109,191,74,0.25); backdrop-filter:blur(8px);">
+              <span class="text-[12px] font-bold" style="color:#6dbf4a;">
+                {{ order.distanceInKm | number:'1.1-1' }} km
+              </span>
+              <span class="text-[11px] font-light ml-1.5" style="color:rgba(255,255,255,0.4);">estimated distance</span>
+            </div>
+          </div>
+
+          <div class="flex divide-x shrink-0" style="border-color:rgba(255,255,255,0.06); border-top:1px solid rgba(255,255,255,0.06);">
+            <div class="flex-1 px-5 py-3 flex items-start gap-3">
+              <div class="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 mt-0.5"
+                   style="background:rgba(109,191,74,0.1); border:1px solid rgba(109,191,74,0.18);">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                     stroke-width="1.8" stroke="#6dbf4a" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
+                </svg>
+              </div>
+              <div class="flex flex-col gap-0.5">
+                <p class="text-[10px] font-semibold tracking-[0.15em] uppercase" style="color:rgba(109,191,74,0.5);">Pickup</p>
+                <p class="text-[13px] font-semibold" style="color:rgba(255,255,255,0.85);">{{ order.restaurantName }}</p>
+                <p class="text-[11px] font-light" style="color:rgba(255,255,255,0.4);">
+                  {{ order.restaurantAddressLine }}, {{ order.restaurantZipCode }} {{ order.restaurantCity }}
+                </p>
+              </div>
+            </div>
+
+            <div class="flex-1 px-5 py-3 flex items-start gap-3">
+              <div class="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 mt-0.5"
+                   style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                     stroke-width="1.8" stroke="rgba(255,255,255,0.5)" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                </svg>
+              </div>
+              <div class="flex flex-col gap-0.5">
+                <p class="text-[10px] font-semibold tracking-[0.15em] uppercase" style="color:rgba(255,255,255,0.3);">Delivery</p>
+                <p class="text-[13px] font-semibold" style="color:rgba(255,255,255,0.85);">
+                  {{ order.deliveryStreetNumber }} {{ order.deliveryAddressLine }}
+                </p>
+                <p class="text-[11px] font-light" style="color:rgba(255,255,255,0.4);">
+                  {{ order.deliveryZipCode }} {{ order.deliveryCity }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="shrink-0 rounded-[20px] overflow-hidden"
+             style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.07);">
+
+          <div class="flex items-center gap-3 px-6 py-3.5"
+               style="border-bottom:1px solid rgba(255,255,255,0.06);">
+            <div class="w-8 h-8 rounded-[9px] flex items-center justify-center shrink-0"
+                 style="background:rgba(109,191,74,0.1); border:1px solid rgba(109,191,74,0.18);">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   stroke-width="1.8" stroke="#6dbf4a" class="w-3.5 h-3.5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-[13px] font-semibold" style="color:rgba(255,255,255,0.88);">Payment Method</p>
+              <p class="text-[10px] font-light" style="color:rgba(255,255,255,0.3);">Simulated card payment</p>
+            </div>
+          </div>
+
+          <div class="px-6 py-4 flex flex-col gap-3">
+            <div class="flex gap-4 items-stretch">
+              <div class="relative rounded-2xl overflow-hidden px-5 py-4 w-[240px] shrink-0"
+                   style="height:140px; background:linear-gradient(135deg, #1a3a1c 0%, #0d2610 50%, #142a16 100%); border:1px solid rgba(109,191,74,0.15);">
+                <div class="absolute top-0 right-0 w-48 h-48 rounded-full opacity-[0.04]"
+                     style="background:radial-gradient(circle, #6dbf4a 0%, transparent 70%); transform:translate(30%, -30%);"></div>
+
+                <div class="flex flex-col justify-between h-full">
+                  <div class="flex items-center justify-between">
+                    <div class="w-9 h-6 rounded-[4px]"
+                         style="background:linear-gradient(135deg, rgba(109,191,74,0.35) 0%, rgba(109,191,74,0.15) 100%);"></div>
+                    <span class="text-[9px] font-bold tracking-[0.2em] uppercase" style="color:rgba(109,191,74,0.4);">EcoEats</span>
+                  </div>
+
+                  <p class="text-[11px] font-mono tracking-[0.22em]" style="color:rgba(255,255,255,0.7);">
+                    •••• &nbsp; •••• &nbsp; •••• &nbsp; 4242
+                  </p>
+
+                  <div class="flex items-end justify-between">
+                    <div>
+                      <p class="text-[8px] font-semibold tracking-[0.15em] uppercase mb-0.5" style="color:rgba(255,255,255,0.2);">Card holder</p>
+                      <p class="text-[11px] font-semibold tracking-[0.04em] uppercase truncate max-w-[120px]" style="color:rgba(255,255,255,0.6);">
+                        {{ cardHolder() || 'YOUR NAME' }}
+                      </p>
+                    </div>
+                    <div class="text-right">
+                      <p class="text-[8px] font-semibold tracking-[0.15em] uppercase mb-0.5" style="color:rgba(255,255,255,0.2);">Expires</p>
+                      <p class="text-[11px] font-semibold" style="color:rgba(255,255,255,0.6);">{{ cardExpiry() || '00/00' }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1 flex flex-col justify-between">
+                <div>
+                  <label class="text-[10px] font-semibold tracking-[0.12em] uppercase mb-1.5 block"
+                         style="color:rgba(255,255,255,0.3);">Card Number</label>
+                  <input type="text"
+                         [ngModel]="cardNumber()"
+                         (ngModelChange)="cardNumber.set($event)"
+                         placeholder="0000 0000 0000 0000"
+                         maxlength="19"
+                         class="w-full px-3.5 py-2.5 rounded-xl text-[13px] font-mono font-medium outline-none tracking-widest"
+                         style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.8); transition:border-color 0.2s ease;"
+                         onfocus="this.style.borderColor='rgba(109,191,74,0.35)'"
+                         onblur="this.style.borderColor='rgba(255,255,255,0.08)'" />
+                </div>
+                <div class="flex gap-3">
+                  <div class="flex-1">
+                    <label class="text-[10px] font-semibold tracking-[0.12em] uppercase mb-1.5 block"
+                           style="color:rgba(255,255,255,0.3);">Expiry Date</label>
+                    <input type="text"
+                           [ngModel]="cardExpiry()"
+                           (ngModelChange)="cardExpiry.set($event)"
+                           placeholder="MM/YY"
+                           maxlength="5"
+                           class="w-full px-3.5 py-2.5 rounded-xl text-[13px] font-medium outline-none"
+                           style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.8); transition:border-color 0.2s ease;"
+                           onfocus="this.style.borderColor='rgba(109,191,74,0.35)'"
+                           onblur="this.style.borderColor='rgba(255,255,255,0.08)'" />
+                  </div>
+                  <div class="flex-1">
+                    <label class="text-[10px] font-semibold tracking-[0.12em] uppercase mb-1.5 block"
+                           style="color:rgba(255,255,255,0.3);">CVV</label>
+                    <input type="password"
+                           [ngModel]="cardCvv()"
+                           (ngModelChange)="cardCvv.set($event)"
+                           placeholder="•••"
+                           maxlength="4"
+                           class="w-full px-3.5 py-2.5 rounded-xl text-[13px] font-medium outline-none text-center"
+                           style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.8); transition:border-color 0.2s ease;"
+                           onfocus="this.style.borderColor='rgba(109,191,74,0.35)'"
+                           onblur="this.style.borderColor='rgba(255,255,255,0.08)'" />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div>
+              <label class="text-[10px] font-semibold tracking-[0.12em] uppercase mb-1.5 block"
+                     style="color:rgba(255,255,255,0.3);">Cardholder Name</label>
+              <input type="text"
+                     [ngModel]="cardHolder()"
+                     (ngModelChange)="cardHolder.set($event)"
+                     placeholder="Full name on card"
+                     class="w-full px-3.5 py-2.5 rounded-xl text-[13px] font-medium outline-none"
+                     style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.8); transition:border-color 0.2s ease;"
+                     onfocus="this.style.borderColor='rgba(109,191,74,0.35)'"
+                     onblur="this.style.borderColor='rgba(255,255,255,0.08)'" />
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="w-105 shrink-0 flex flex-col h-full">
+        <div class="rounded-[20px] overflow-hidden flex flex-col h-full"
+             style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.07);">
+
+          <div class="flex items-center gap-3 px-6 py-5 shrink-0"
+               style="border-bottom:1px solid rgba(255,255,255,0.06);">
+            <div class="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0"
+                 style="background:rgba(109,191,74,0.1); border:1px solid rgba(109,191,74,0.18);">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   stroke-width="1.8" stroke="#6dbf4a" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+              </svg>
+            </div>
+            <span class="text-[15px] font-bold" style="color:rgba(255,255,255,0.88);">Order Summary</span>
+          </div>
+
+          <div class="flex flex-col divide-y flex-1 overflow-y-auto min-h-0"
+               style="border-color:rgba(255,255,255,0.05); scrollbar-width:thin; scrollbar-color:rgba(109,191,74,0.12) transparent;">
+            @for (line of order.orderLines; track line.plateId) {
+              <div class="flex items-center gap-4 px-6 py-4">
+                <div class="w-10 h-10 rounded-[10px] flex items-center justify-center shrink-0"
+                     style="background:rgba(109,191,74,0.06); border:1px solid rgba(109,191,74,0.12);">
+                  <span class="text-[14px] font-bold" style="color:#6dbf4a;">{{ line.quantity }}×</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-[13px] font-semibold leading-tight truncate" style="color:rgba(255,255,255,0.8);">
+                    {{ line.plateName }}
+                  </p>
+                  <p class="text-[11px] font-light mt-0.5" style="color:rgba(255,255,255,0.35);">
+                    {{ line.unitPrice | currency: 'EUR' : 'symbol' : '1.2-2' }} each
+                  </p>
+                </div>
+                <span class="text-[14px] font-bold shrink-0" style="color:rgba(255,255,255,0.75);">
+                  {{ line.subtotal | currency: 'EUR' : 'symbol' : '1.2-2' }}
+                </span>
+              </div>
+            }
+          </div>
+
+          <div class="px-6 py-4 shrink-0" style="border-top:1px solid rgba(255,255,255,0.06);">
+            <p class="text-[10px] font-semibold tracking-[0.15em] uppercase mb-3"
+               style="color:rgba(109,191,74,0.5);">Add a tip for the driver</p>
+            <div class="flex gap-2">
+              @for (amount of tipOptions; track amount) {
+                <button
+                  (click)="selectedTip.set(selectedTip() === amount ? 0 : amount)"
+                  class="flex-1 py-2.5 rounded-xl text-[13px] font-bold transition-all"
+                  [style.background]="selectedTip() === amount ? 'rgba(109,191,74,0.15)' : 'rgba(255,255,255,0.03)'"
+                  [style.border]="selectedTip() === amount ? '1px solid rgba(109,191,74,0.4)' : '1px solid rgba(255,255,255,0.07)'"
+                  [style.color]="selectedTip() === amount ? '#6dbf4a' : 'rgba(255,255,255,0.4)'"
+                  style="cursor:pointer; transition:all 0.2s ease;">
+                  {{ amount | currency: 'EUR' : 'symbol' : '1.0-0' }}
+                </button>
+              }
+            </div>
+          </div>
+          <div class="px-6 py-5 shrink-0 flex flex-col gap-3" style="border-top:1px solid rgba(255,255,255,0.06);">
+            <div class="flex items-center justify-between">
+              <span class="text-[12px]" style="color:rgba(255,255,255,0.4);">Restaurant</span>
+              <span class="text-[12px] font-semibold" style="color:rgba(255,255,255,0.65);">{{ order.restaurantName }}</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-[12px]" style="color:rgba(255,255,255,0.4);">Items</span>
+              <span class="text-[12px] font-semibold" style="color:rgba(255,255,255,0.65);">{{ order.orderLines.length }} dish{{ order.orderLines.length > 1 ? 'es' : '' }}</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-[12px]" style="color:rgba(255,255,255,0.4);">Deliver to</span>
+              <span class="text-[12px] font-semibold text-right" style="color:rgba(255,255,255,0.65); max-width:55%;">
+                {{ order.deliveryStreetNumber }} {{ order.deliveryAddressLine }}, {{ order.deliveryCity }}
+              </span>
+            </div>
+
+            <div class="h-px w-full" style="background:rgba(255,255,255,0.06);"></div>
+
+            <div class="flex items-center justify-between">
+              <span class="text-[12px]" style="color:rgba(255,255,255,0.4);">Subtotal</span>
+              <span class="text-[12px] font-semibold" style="color:rgba(255,255,255,0.65);">
+                {{ order.orderSubtotal | currency: 'EUR' : 'symbol' : '1.2-2' }}
+              </span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-[12px] flex items-center gap-1.5" style="color:rgba(255,255,255,0.4);">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                     stroke-width="1.8" stroke="currentColor" class="w-3.5 h-3.5">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                </svg>
+                Delivery fee
+              </span>
+              <span class="text-[12px] font-semibold" style="color:rgba(255,255,255,0.65);">
+                {{ order.deliveryFee | currency: 'EUR' : 'symbol' : '1.2-2' }}
+              </span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-[12px]" style="color:rgba(255,255,255,0.4);">Platform fee</span>
+              <span class="text-[12px] font-semibold" style="color:rgba(255,255,255,0.65);">
+                {{ order.platformServiceFee | currency: 'EUR' : 'symbol' : '1.2-2' }}
+              </span>
+            </div>
+
+            @if (selectedTip() > 0) {
+              <div class="flex items-center justify-between">
+                <span class="text-[12px] flex items-center gap-1.5" style="color:rgba(109,191,74,0.6);">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                       stroke-width="1.8" stroke="currentColor" class="w-3.5 h-3.5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                  </svg>
+                  Driver tip
+                </span>
+                <span class="text-[12px] font-semibold" style="color:#6dbf4a;">
+                  {{ selectedTip() | currency: 'EUR' : 'symbol' : '1.2-2' }}
+                </span>
+              </div>
+            }
+
+            <div class="h-px w-full mt-1" style="background:rgba(109,191,74,0.15);"></div>
+
+            <div class="flex items-center justify-between pt-1">
+              <span class="text-[14px] font-bold" style="color:rgba(255,255,255,0.9);">Total</span>
+              <span class="text-[24px] font-bold" style="color:#6dbf4a; font-family:'Playfair Display',serif;">
+                {{ finalTotal() | currency: 'EUR' : 'symbol' : '1.2-2' }}
+              </span>
+            </div>
+
+            <button
+              [disabled]="paymentState().loading"
+              class="w-full py-4 rounded-[14px] text-[14px] font-bold tracking-[0.06em] flex items-center justify-center gap-2.5 mt-1"
+              style="background:linear-gradient(135deg, #6dbf4a 0%, #5aad38 100%); color:#0d1a0f; border:none; cursor:pointer; transition:all 0.2s ease;"
+              [style.opacity]="paymentState().loading ? '0.6' : '1'">
+              @if (paymentState().loading) {
+                <div class="w-4 h-4 rounded-full border-2 border-transparent animate-spin"
+                     style="border-top-color:#0d1a0f; border-right-color:rgba(13,26,15,0.3);"></div>
+                Processing…
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                     stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                </svg>
+                Confirm & Pay · {{ finalTotal() | currency: 'EUR' : 'symbol' : '1.2-2' }}
+              }
+            </button>
+
+            <div class="flex items-center justify-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   stroke-width="1.5" stroke="rgba(109,191,74,0.3)" class="w-3.5 h-3.5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+              </svg>
+              <span class="text-[10px]" style="color:rgba(255,255,255,0.2);">Secure simulated payment · No real charges</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+}

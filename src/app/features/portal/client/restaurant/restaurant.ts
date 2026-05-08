@@ -7,7 +7,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CurrencyPipe, NgClass } from '@angular/common';
 import { RestaurantsService } from '../client-home/service/restaurants.service';
 import { ComponentState, createState } from '../../../../core/types/state.types';
@@ -16,6 +16,10 @@ import { PlateResponse } from '../../restaurant/types/restaurant-menu.types';
 import { RestaurantInfoType } from '../../restaurant/types/restaurant-profile.types';
 import { Observable } from 'rxjs';
 import { CartService } from '../cart.service.ts';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialog } from '../../../../shared/dialogs/confirmation-dialog/confirmation-dialog';
+import { FeedbackDisplayDialog } from '../../../../shared/dialogs/feedback-display-dialog/feedback-display-dialog';
+import { OrderService } from '../../../../shared/services/order-service';
 
 @Component({
   selector: 'app-restaurant',
@@ -30,6 +34,9 @@ export class Restaurant implements OnInit {
   private readonly restaurantService = inject(RestaurantsService);
   private readonly cartService = inject(CartService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly dialog = inject(MatDialog);
+  private readonly router = inject(Router);
+  private readonly orderService = inject(OrderService);
 
   private readonly restaurantId = this.activatedRoute.snapshot.params['id'] as string;
 
@@ -38,6 +45,7 @@ export class Restaurant implements OnInit {
 
   protected readonly cartFetchState = signal<ComponentState<any>>(createState());
   protected readonly cartMutationState = signal<ComponentState<any>>(createState());
+  readonly submitOrderState = signal(createState())
 
   protected readonly cartItems = signal<any[]>([]);
   protected readonly cartCount = computed(() =>
@@ -47,6 +55,8 @@ export class Restaurant implements OnInit {
   protected readonly cartTotal = computed(() =>
     this.cartItems().reduce((sum, i) => sum + Number(i.unitPrice) * i.quantity, 0),
   );
+
+  protected readonly cartRestaurant = signal<{ name: string; id: string } | null>(null);
 
   protected readonly expandedPlateId = signal<string | null>(null);
   protected readonly plateColumns = computed<[PlateResponse[], PlateResponse[]]>(() => {
@@ -81,6 +91,7 @@ export class Restaurant implements OnInit {
             plateQuantity: 1,
           })
         : this.cartService.addItem$({
+            restaurantId: this.restaurantId,
             plateId: plate.id,
             plateQuantity: 1,
           });
@@ -97,7 +108,8 @@ export class Restaurant implements OnInit {
   }
 
   removeFromCart(plateId: string): void {
-    this.mutateAndSync(this.cartService.removeItem$(plateId));
+    const quantity = this.quantityOf(plateId);
+    this.mutateAndSync(this.cartService.removeItem$(plateId, quantity));
   }
 
   quantityOf(plateId: string): number {
@@ -114,14 +126,74 @@ export class Restaurant implements OnInit {
     return `${a.streetNumber} ${a.addressLine}, ${a.city}`;
   }
 
+  submitOrder(): void {
+      executeObservable(this.orderService.submitOrder$(), {
+        state: this.submitOrderState,
+        destroyRef: this.destroyRef,
+        onSuccess: (response) => this.router.navigate(['/portal/order/payment', response.orderId]),
+        onError: () => console.error('Failed to submit order'),
+      })
+  }
+
   private mutateAndSync(mutation$: Observable<any>): void {
     executeObservable(mutation$, {
       state: this.cartMutationState,
       destroyRef: this.destroyRef,
-      onSuccess: (cartState) => this.syncCartItems(cartState),
+      onSuccess: (cartState) => {
+        this.syncCartItems(cartState);
+      },
+      onError: (error) => {
+        console.error('Error mutating cart:', error.status);
+        this.handleCartMutationErrors(error.status);
+      },
     });
   }
+
   private syncCartItems(cartState: any): void {
+    this.cartRestaurant.set({
+      name: cartState?.restaurantName,
+      id: cartState?.restaurantId,
+    });
     this.cartItems.set(cartState?.items ?? []);
+  }
+
+  private handleCartMutationErrors(errorStatus: number): void {
+    if (errorStatus === 409) {
+      this.dialog
+        .open(ConfirmationDialog, {
+          hasBackdrop: false,
+          data: {
+            title: 'Cannot mix restaurants',
+            message:
+              'Adding items from a different restaurant will clear your current cart. Do you want to continue?',
+            actionLabel: 'Clear cart',
+            cancelLabel: 'Keep cart and return to restaurant',
+            variant: 'warning',
+          },
+        })
+        .afterClosed()
+        .subscribe((confirmed: boolean) => {
+          if (!confirmed) {
+            window.location.href = `/portal/restaurant/${this.cartFetchState().data?.restaurantId}`;
+            return;
+          }
+
+          executeObservable(this.cartService.clearCart$(), {
+            state: this.cartMutationState,
+            destroyRef: this.destroyRef,
+            onSuccess: () => {
+              this.cartItems.set([]);
+              this.cartRestaurant.set(null);
+            },
+          });
+        });
+    }
+
+    if (errorStatus === 422) {
+      this.dialog.open(FeedbackDisplayDialog, {data: {
+        message: 'This item is out of stock and no longer available for the moment',
+        variant: 'error'
+        }})
+    }
   }
 }
