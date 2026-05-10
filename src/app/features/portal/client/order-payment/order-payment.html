@@ -169,23 +169,22 @@
               </svg>
             </div>
             <div>
-              <p class="text-[13px] font-semibold" style="color:rgba(255,255,255,0.88);">Payment Method</p>
-              <p class="text-[10px] font-light" style="color:rgba(255,255,255,0.3);">Simulated card payment</p>
+              <p class="text-[13px] font-semibold" style="color:rgba(255,255,255,0.88);">Payment</p>
             </div>
           </div>
 
-          <div class="px-6 py-4 flex flex-col gap-3">
+          <div class="px-6 py-4 flex flex-col gap-3" [formGroup]="paymentForm">
             <div class="flex gap-4 items-stretch">
-              <div class="relative rounded-2xl overflow-hidden px-5 py-4 w-[240px] shrink-0"
+              <div class="relative rounded-2xl overflow-hidden px-5 py-4 w-67.5 shrink-0"
                    style="height:140px; background:linear-gradient(135deg, #1a3a1c 0%, #0d2610 50%, #142a16 100%); border:1px solid rgba(109,191,74,0.15);">
                 <div class="absolute top-0 right-0 w-48 h-48 rounded-full opacity-[0.04]"
                      style="background:radial-gradient(circle, #6dbf4a 0%, transparent 70%); transform:translate(30%, -30%);"></div>
 
                 <div class="flex flex-col justify-between h-full">
                   <div class="flex items-center justify-between">
-                    <div class="w-9 h-6 rounded-[4px]"
+                    <div class="w-9 h-6 rounded-sm"
                          style="background:linear-gradient(135deg, rgba(109,191,74,0.35) 0%, rgba(109,191,74,0.15) 100%);"></div>
-                    <span class="text-[9px] font-bold tracking-[0.2em] uppercase" style="color:rgba(109,191,74,0.4);">EcoEats</span>
+                    <span class="text-[9px] font-bold tracking-[0.2em] uppercase" style="color:rgba(109,191,74,0.4);">VISA/MASTERCARD</span>
                   </div>
 
                   <p class="text-[11px] font-mono tracking-[0.22em]" style="color:rgba(255,255,255,0.7);">
@@ -196,78 +195,119 @@
                     <div>
                       <p class="text-[8px] font-semibold tracking-[0.15em] uppercase mb-0.5" style="color:rgba(255,255,255,0.2);">Card holder</p>
                       <p class="text-[11px] font-semibold tracking-[0.04em] uppercase truncate max-w-[120px]" style="color:rgba(255,255,255,0.6);">
-                        {{ cardHolder() || 'YOUR NAME' }}
+                        {{ paymentForm.get('cardHolder')?.value || 'YOUR NAME' }}
                       </p>
                     </div>
                     <div class="text-right">
                       <p class="text-[8px] font-semibold tracking-[0.15em] uppercase mb-0.5" style="color:rgba(255,255,255,0.2);">Expires</p>
-                      <p class="text-[11px] font-semibold" style="color:rgba(255,255,255,0.6);">{{ cardExpiry() || '00/00' }}</p>
+                      <p class="text-[11px] font-semibold" style="color:rgba(255,255,255,0.6);">
+                        {{ paymentForm.get('cardExpiry')?.value || '00/00' }}
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
+
               <div class="flex-1 flex flex-col justify-between">
                 <div>
                   <label class="text-[10px] font-semibold tracking-[0.12em] uppercase mb-1.5 block"
                          style="color:rgba(255,255,255,0.3);">Card Number</label>
                   <input type="text"
-                         [ngModel]="cardNumber()"
-                         (ngModelChange)="cardNumber.set($event)"
+                         [formControl]="$any(paymentForm.get('cardNumber'))"
+                         (input)="formatCardNumber($event)"
                          placeholder="0000 0000 0000 0000"
                          maxlength="19"
                          class="w-full px-3.5 py-2.5 rounded-xl text-[13px] font-mono font-medium outline-none tracking-widest"
-                         style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.8); transition:border-color 0.2s ease;"
-                         onfocus="this.style.borderColor='rgba(109,191,74,0.35)'"
-                         onblur="this.style.borderColor='rgba(255,255,255,0.08)'" />
+                         [style.border]="paymentForm.get('cardNumber')?.invalid && paymentForm.get('cardNumber')?.touched
+                         ? '1px solid rgba(239,68,68,0.5)'
+                         : '1px solid rgba(255,255,255,0.08)'"
+                         style="background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.8); transition:border-color 0.2s ease;" />
+                  @if (paymentForm.get('cardNumber')?.touched && paymentForm.get('cardNumber')?.invalid) {
+                    <p class="text-[10px] mt-1 pl-1" style="color:rgba(239,68,68,0.7);">
+                      @if (paymentForm.get('cardNumber')?.hasError('required')) {
+                        Card number is required
+                      } @else {
+                        Enter a valid 16-digit card number
+                      }
+                    </p>
+                  }
                 </div>
+
                 <div class="flex gap-3">
                   <div class="flex-1">
                     <label class="text-[10px] font-semibold tracking-[0.12em] uppercase mb-1.5 block"
                            style="color:rgba(255,255,255,0.3);">Expiry Date</label>
                     <input type="text"
-                           [ngModel]="cardExpiry()"
-                           (ngModelChange)="cardExpiry.set($event)"
+                           formControlName="cardExpiry"
                            placeholder="MM/YY"
                            maxlength="5"
                            class="w-full px-3.5 py-2.5 rounded-xl text-[13px] font-medium outline-none"
-                           style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.8); transition:border-color 0.2s ease;"
-                           onfocus="this.style.borderColor='rgba(109,191,74,0.35)'"
-                           onblur="this.style.borderColor='rgba(255,255,255,0.08)'" />
+                           [style.border]="paymentForm.get('cardExpiry')?.invalid && paymentForm.get('cardExpiry')?.touched
+                   ? '1px solid rgba(239,68,68,0.5)'
+                   : '1px solid rgba(255,255,255,0.08)'"
+                           style="background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.8); transition:border-color 0.2s ease;" />
+                    @if (paymentForm.get('cardExpiry')?.touched && paymentForm.get('cardExpiry')?.invalid) {
+                      <p class="text-[10px] mt-1 pl-1" style="color:rgba(239,68,68,0.7);">
+                        @if (paymentForm.get('cardExpiry')?.hasError('required')) {
+                          Expiry is required
+                        } @else {
+                          Use MM/YY format
+                        }
+                      </p>
+                    }
                   </div>
+
                   <div class="flex-1">
                     <label class="text-[10px] font-semibold tracking-[0.12em] uppercase mb-1.5 block"
                            style="color:rgba(255,255,255,0.3);">CVV</label>
                     <input type="password"
-                           [ngModel]="cardCvv()"
-                           (ngModelChange)="cardCvv.set($event)"
+                           formControlName="cardCvv"
                            placeholder="•••"
                            maxlength="4"
                            class="w-full px-3.5 py-2.5 rounded-xl text-[13px] font-medium outline-none text-center"
-                           style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.8); transition:border-color 0.2s ease;"
-                           onfocus="this.style.borderColor='rgba(109,191,74,0.35)'"
-                           onblur="this.style.borderColor='rgba(255,255,255,0.08)'" />
+                           [style.border]="paymentForm.get('cardCvv')?.invalid && paymentForm.get('cardCvv')?.touched
+                   ? '1px solid rgba(239,68,68,0.5)'
+                   : '1px solid rgba(255,255,255,0.08)'"
+                           style="background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.8); transition:border-color 0.2s ease;" />
+                    @if (paymentForm.get('cardCvv')?.touched && paymentForm.get('cardCvv')?.invalid) {
+                      <p class="text-[10px] mt-1 pl-1" style="color:rgba(239,68,68,0.7);">
+                        @if (paymentForm.get('cardCvv')?.hasError('required')) {
+                          CVV is required
+                        } @else {
+                          Enter 3 or 4 digits
+                        }
+                      </p>
+                    }
                   </div>
                 </div>
               </div>
 
             </div>
+
             <div>
               <label class="text-[10px] font-semibold tracking-[0.12em] uppercase mb-1.5 block"
                      style="color:rgba(255,255,255,0.3);">Cardholder Name</label>
               <input type="text"
-                     [ngModel]="cardHolder()"
-                     (ngModelChange)="cardHolder.set($event)"
+                     formControlName="cardHolder"
                      placeholder="Full name on card"
                      class="w-full px-3.5 py-2.5 rounded-xl text-[13px] font-medium outline-none"
-                     style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.8); transition:border-color 0.2s ease;"
-                     onfocus="this.style.borderColor='rgba(109,191,74,0.35)'"
-                     onblur="this.style.borderColor='rgba(255,255,255,0.08)'" />
+                     [style.border]="paymentForm.get('cardHolder')?.invalid && paymentForm.get('cardHolder')?.touched
+             ? '1px solid rgba(239,68,68,0.5)'
+             : '1px solid rgba(255,255,255,0.08)'"
+                     style="background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.8); transition:border-color 0.2s ease;" />
+              @if (paymentForm.get('cardHolder')?.touched && paymentForm.get('cardHolder')?.invalid) {
+                <p class="text-[10px] mt-1 pl-1" style="color:rgba(239,68,68,0.7);">
+                  @if (paymentForm.get('cardHolder')?.hasError('required')) {
+                    Cardholder name is required
+                  } @else {
+                    Name must be at least 3 characters
+                  }
+                </p>
+              }
             </div>
 
           </div>
         </div>
-
-
       </div>
 
       <div class="w-105 shrink-0 flex flex-col h-full">
@@ -397,6 +437,7 @@
             </div>
 
             <button
+              (click)="submitPayment()"
               [disabled]="paymentState().loading"
               class="w-full py-4 rounded-[14px] text-[14px] font-bold tracking-[0.06em] flex items-center justify-center gap-2.5 mt-1"
               style="background:linear-gradient(135deg, #6dbf4a 0%, #5aad38 100%); color:#0d1a0f; border:none; cursor:pointer; transition:all 0.2s ease;"

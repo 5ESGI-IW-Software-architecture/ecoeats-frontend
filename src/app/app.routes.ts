@@ -74,6 +74,11 @@ export const routes: Routes = [
         path: 'order/payment/:orderId',
         loadComponent: () => import('./features/portal/client/order-payment/order-payment').then(c => c.OrderPayment),
         canActivate: [authGuard, clientGuard],
+      },
+      {
+        path: 'orders/status/:orderId',
+        loadComponent: () => import('./features/portal/client/order-status/order-status').then(c => c.OrderStatus),
+        canActivate: [authGuard, clientGuard],
       }
     ],
   },
