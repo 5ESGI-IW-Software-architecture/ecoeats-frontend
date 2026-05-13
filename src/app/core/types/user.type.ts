@@ -19,9 +19,10 @@ export type DelivererUserType = {
   username: string
   phoneNumber: string
   delivererId: string
-  availability: string
+  availability: 'Available' | 'Unavailable'
   isExpert: boolean
   walletBalance: number
+  deliveriesCount: number
 }
 
 export type ClientUserType = {

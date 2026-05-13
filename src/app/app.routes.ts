@@ -3,6 +3,7 @@ import { authGuard } from './core/guards/auth.guard';
 import { restaurantGuard } from './core/guards/restaurant.guard';
 import { clientGuard } from './core/guards/client.guard';
 import { roleRedirectGuard } from './core/guards/role-redirect.guard';
+import { delivererGuard } from './core/guards/deliverer.guard';
 
 export const routes: Routes = [
   { path: '' , pathMatch: 'full', canActivate: [roleRedirectGuard], children: []},
@@ -81,6 +82,20 @@ export const routes: Routes = [
         canActivate: [authGuard, clientGuard],
       }
     ],
+  },
+
+  {
+    path: 'deliverer',
+    loadComponent: () => import('./features/portal/deliverer/deliverer-shell/deliverer-shell').then(c => c.DelivererShell),
+    canActivate: [authGuard, delivererGuard],
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./features/portal/deliverer/dashboard/dashboard').then(c => c.Dashboard),
+        canActivate: [authGuard, delivererGuard],
+      },
+    ]
   },
 
   { path: '**', redirectTo: '' },

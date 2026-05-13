@@ -19,7 +19,7 @@ export type OrderStatusEnum =
   | 'Closed'
   | 'Cancelled';
 
-export type DeliveryStatus = 'PickedUp' | 'Mid delivery' | 'Delivered';
+export type DeliveryStatus = 'Accepted' | 'PickedUp' | 'Delivered';
 
 interface TimelineStep<T> {
   status: T;
@@ -46,12 +46,10 @@ export class OrderStatus implements OnInit {
   readonly currentDeliveryStatus = signal<DeliveryStatus | null>(null);
   readonly estimatedPreparationTime = signal<number | null>(null);
 
-
   readonly receiptUrl = signal<string | null>(null);
   readonly receiptState = signal<ComponentState<any>>(createState());
 
   readonly hasReceipt = computed(() => !!this.receiptUrl() && this.receiptUrl() !== '');
-
 
   readonly mapRawUrl = computed(() => {
     const order = this.orderState().data;
@@ -60,7 +58,6 @@ export class OrderStatus implements OnInit {
     const dest = `${order.deliveryStreetNumber} ${order.deliveryAddressLine}, ${order.deliveryZipCode} ${order.deliveryCity}`;
     return `https://www.google.com/maps/embed/v1/directions?key=${environment.googleMapsApiKey}&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(dest)}&mode=driving`;
   });
-
 
   readonly orderSteps = signal<TimelineStep<OrderStatusEnum>[]>([
     { status: 'Pending', label: 'Order Placed', description: 'Waiting for payment confirmation' },
@@ -80,15 +77,17 @@ export class OrderStatus implements OnInit {
       label: 'Ready for Pickup',
       description: 'Your order is packed and waiting for the driver',
     },
-    { status: 'Closed', label: 'Order Complete', description: 'Your order has been fulfilled' },
   ]);
 
   readonly deliverySteps = signal<TimelineStep<DeliveryStatus>[]>([
+    {
+      status: 'Accepted',
+      label: 'Driver Assigned',
+      description: 'A deliverer is heading to the restaurant',
+    },
     { status: 'PickedUp', label: 'Picked Up', description: 'The driver has collected your order' },
-    { status: 'Mid delivery', label: 'On the Way', description: 'Your order is en route to you' },
     { status: 'Delivered', label: 'Delivered', description: 'Your order has arrived — enjoy!' },
   ]);
-
 
   protected readonly orderStatusIndex: Record<OrderStatusEnum, number> = {
     Pending: 0,
@@ -102,17 +101,14 @@ export class OrderStatus implements OnInit {
   };
 
   private readonly deliveryStatusIndex: Record<DeliveryStatus, number> = {
-    PickedUp: 0,
-    'Mid delivery': 1,
+    Accepted: 0,
+    PickedUp: 1,
     Delivered: 2,
   };
 
-
   readonly isCancelled = computed(() => this.currentOrderStatus() === 'Cancelled');
   readonly isRejected = computed(() => this.currentOrderStatus() === 'Rejected');
-  readonly isCompleted = computed(
-    () => this.currentOrderStatus() === 'Closed' && this.currentDeliveryStatus() === 'Delivered',
-  );
+  readonly isCompleted = computed(() => this.currentDeliveryStatus() === 'Delivered');
 
   readonly showDeliveryPhase = computed(() => {
     const idx = this.orderStatusIndex[this.currentOrderStatus()];
@@ -123,8 +119,8 @@ export class OrderStatus implements OnInit {
     const ds = this.currentDeliveryStatus();
     if (ds) {
       const labels: Record<DeliveryStatus, string> = {
-        PickedUp: 'Driver picked up your order',
-        'Mid delivery': 'On the way to you',
+        Accepted: 'Driver on the way',
+        PickedUp: 'Order picked up',
         Delivered: 'Order delivered!',
       };
       return labels[ds];
@@ -146,8 +142,8 @@ export class OrderStatus implements OnInit {
     const ds = this.currentDeliveryStatus();
     if (ds) {
       const descs: Record<DeliveryStatus, string> = {
-        PickedUp: 'The driver is heading to you with your food.',
-        'Mid delivery': 'Almost there — your order is on its way.',
+        Accepted: 'Your driver is heading to the restaurant to collect your order.',
+        PickedUp: 'Your food is on the way — almost there!',
         Delivered: 'Your food has arrived. Bon appétit!',
       };
       return descs[ds];
@@ -177,12 +173,11 @@ export class OrderStatus implements OnInit {
     return Math.round(((orderIdx + 1) / totalSteps) * 100);
   });
 
-
   isOrderStepCompleted(status: OrderStatusEnum): boolean {
     const current = this.orderStatusIndex[this.currentOrderStatus()];
     const step = this.orderStatusIndex[status];
     if (current < 0 || step < 0) return false;
-    return step < current;
+    return step < current + 1;
   }
 
   isOrderStepActive(status: OrderStatusEnum): boolean {
@@ -197,7 +192,7 @@ export class OrderStatus implements OnInit {
   isDeliveryStepCompleted(status: DeliveryStatus): boolean {
     const ds = this.currentDeliveryStatus();
     if (!ds) return false;
-    return this.deliveryStatusIndex[status] < this.deliveryStatusIndex[ds];
+    return this.deliveryStatusIndex[status] < this.deliveryStatusIndex[ds] + 1;
   }
 
   isDeliveryStepActive(status: DeliveryStatus): boolean {

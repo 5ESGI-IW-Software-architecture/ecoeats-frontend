@@ -53,6 +53,10 @@ export class AuthService {
       .pipe(map((response) => response.data));
   }
 
+  resetUser(): Observable<UserType> {
+    return this.me$().pipe(tap((user) => this.authStore.setUser(user)));
+  }
+
   saveTokens(tokens: AuthTokens) {
     localStorage.setItem('access_token', tokens.accessToken);
     localStorage.setItem('refresh_token', tokens.refreshToken);
@@ -67,7 +71,4 @@ export class AuthService {
     localStorage.removeItem('refresh_token');
   }
 
-  getRefreshTokens() {
-    return localStorage.getItem('refresh_token');
-  }
 }

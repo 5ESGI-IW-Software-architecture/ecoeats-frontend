@@ -92,6 +92,11 @@ export class OrderPayment implements OnInit {
       tipAmount: selectedTip,
     }
 
+    if (this.paymentForm.invalid) {
+      this.paymentForm.markAllAsTouched();
+      return;
+    }
+
     executeObservable(this.orderService.submitPayment$(paymentPayload), {
       state: this.paymentState,
       destroyRef: this.destroyRef,

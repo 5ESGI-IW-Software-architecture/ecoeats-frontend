@@ -15,14 +15,15 @@ import { executeObservable } from '../../../../core/utils/observables.utils';
 import { OrderService } from '../../../../shared/services/order-service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialog } from '../../../../shared/dialogs/confirmation-dialog/confirmation-dialog';
-import { filter, switchMap } from 'rxjs';
+import { EMPTY, filter, switchMap } from 'rxjs';
 
 export type IncomingOrderStatus =
   | 'Paid'
   | 'Accepted'
   | 'Rejected'
   | 'InPreparation'
-  | 'ReadyForPickup';
+  | 'ReadyForPickup'
+| 'Closed'
 
 export type IncomingOrderLine = {
   plateId: string;
@@ -82,7 +83,7 @@ export class IncomingOrders implements OnInit {
       Accepted: 2,
     };
     return (this.orders().data ?? [])
-      .filter((o) => ['Accepted', 'InPreparation', 'ReadyForPickup'].includes(o.status))
+      .filter((o) => ['Accepted', 'InPreparation', 'ReadyForPickup', 'Closed'].includes(o.status))
       .sort((a, b) => (statusOrder[a.status] ?? 99) - (statusOrder[b.status] ?? 99));
   });
 
@@ -156,7 +157,9 @@ export class IncomingOrders implements OnInit {
       .afterClosed()
       .pipe(
         filter((result) => result === true),
-        switchMap(() => this.orderService.rejectOrder$(orderId)),
+        switchMap(
+          (result) => (result === true ? this.orderService.rejectOrder$(orderId) : EMPTY),
+        ),
       );
 
     executeObservable(rejection$, {
