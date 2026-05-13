@@ -1,5 +1,5 @@
 import { UserRoles } from '../auth/auth.types';
-import { AuthStore } from '../../store/auth.store';
+import { AuthStore } from '../../shared/services/auth.store';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { catchError, map, Observable, of, tap } from 'rxjs';

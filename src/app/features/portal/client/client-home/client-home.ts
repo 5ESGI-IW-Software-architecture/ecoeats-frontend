@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import {
   RestaurantInfoType,
   RestaurantWithDistance,
-} from '../../restaurant/types/restaurant-profile.types';
+} from '../../../../shared/types/restaurant-profile.types';
 import { ComponentState, createState } from '../../../../core/types/state.types';
 import { executeObservable } from '../../../../core/utils/observables.utils';
 import { DestroyRef } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { RestaurantsService } from './service/restaurants.service';
+import { RestaurantsService } from '../../../../shared/services/restaurants-service';
 
 @Component({
   selector: 'app-client-home',

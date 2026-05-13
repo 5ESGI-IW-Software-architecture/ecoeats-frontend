@@ -9,12 +9,12 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RestaurantMenuService } from './restaurant-menu.service';
-import { AuthStore } from '../../../../store/auth.store';
-import { RestaurantUserType } from '../../../../core/types/user.type';
+import { RestaurantMenuService } from '../../../../shared/services/restaurant-menu-service';
+import { AuthStore } from '../../../../shared/services/auth.store';
+import { RestaurantUserType } from '../../../../shared/types/user.type';
 import { ComponentState, createState } from '../../../../core/types/state.types';
 import { executeObservable } from '../../../../core/utils/observables.utils';
-import { AllergenType, CreatePlateRequest, PlateResponse, UpdatePlateRequest } from '../types/restaurant-menu.types';
+import { AllergenType, CreatePlateRequest, PlateResponse, UpdatePlateRequest } from '../../../../shared/types/restaurant-menu.types';
 
 @Component({
   selector: 'app-restaurant-menu',

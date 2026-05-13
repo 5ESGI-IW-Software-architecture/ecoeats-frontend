@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, Signal, WritableSignal } from '@angular/core';
-import { AuthStore } from '../../../../store/auth.store';
-import { RestaurantUserType } from '../../../../core/types/user.type';
+import { AuthStore } from '../../../../shared/services/auth.store';
+import { RestaurantUserType } from '../../../../shared/types/user.type';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../../core/auth/auth.service';
 

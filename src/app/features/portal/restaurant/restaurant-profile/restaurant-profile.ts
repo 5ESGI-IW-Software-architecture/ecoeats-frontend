@@ -10,12 +10,12 @@ import {
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AddressAutocomplete, PhotonAddress } from '../../../../shared/components/address-autocomplete/address-autocomplete';
 import { from, switchMap } from 'rxjs';
-import { AuthStore } from '../../../../store/auth.store';
-import { RestaurantUserType } from '../../../../core/types/user.type';
+import { AuthStore } from '../../../../shared/services/auth.store';
+import { RestaurantUserType } from '../../../../shared/types/user.type';
 import { ComponentState, createState } from '../../../../core/types/state.types';
 import { executeObservable } from '../../../../core/utils/observables.utils';
-import { RestaurantProfileService } from './restaurant-profile.service';
-import { RestaurantProfileResponse } from '../types/restaurant-profile.types';
+import { RestaurantProfileService } from '../../../../shared/services/restaurant-profile-service';
+import { RestaurantProfileResponse } from '../../../../shared/types/restaurant-profile.types';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/auth/auth.service';
 

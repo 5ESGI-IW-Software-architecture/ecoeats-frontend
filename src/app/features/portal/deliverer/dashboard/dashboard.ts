@@ -10,8 +10,8 @@ import {
 import { NgTemplateOutlet } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
-import { AuthStore } from '../../../../store/auth.store';
-import { DelivererUserType } from '../../../../core/types/user.type';
+import { AuthStore } from '../../../../shared/services/auth.store';
+import { DelivererUserType } from '../../../../shared/types/user.type';
 import { DeliveriesService } from '../../../../shared/services/delivereies-service';
 import { executeObservable } from '../../../../core/utils/observables.utils';
 import { ComponentState, createState } from '../../../../core/types/state.types';

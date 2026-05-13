@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { ApiService } from '../../../../core/http/api.service';
-import { HttpResult } from '../../../../core/types/api.types';
+import { ApiService } from '../../core/http/api.service';
+import { HttpResult } from '../../core/types/api.types';
 import {
   ChangePasswordDto,
   RestaurantProfileResponse,

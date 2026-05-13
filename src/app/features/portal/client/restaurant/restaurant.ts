@@ -9,13 +9,13 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CurrencyPipe, NgClass } from '@angular/common';
-import { RestaurantsService } from '../client-home/service/restaurants.service';
+import { RestaurantsService } from '../../../../shared/services/restaurants-service';
 import { ComponentState, createState } from '../../../../core/types/state.types';
 import { executeObservable } from '../../../../core/utils/observables.utils';
-import { PlateResponse } from '../../restaurant/types/restaurant-menu.types';
-import { RestaurantInfoType } from '../../restaurant/types/restaurant-profile.types';
+import { PlateResponse } from '../../../../shared/types/restaurant-menu.types';
+import { RestaurantInfoType } from '../../../../shared/types/restaurant-profile.types';
 import { Observable } from 'rxjs';
-import { CartService } from '../cart.service.ts';
+import { CartService } from '../../../../shared/services/cart.service.ts.ts';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialog } from '../../../../shared/dialogs/confirmation-dialog/confirmation-dialog';
 import { FeedbackDisplayDialog } from '../../../../shared/dialogs/feedback-display-dialog/feedback-display-dialog';

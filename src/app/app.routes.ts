@@ -9,7 +9,6 @@ export const routes: Routes = [
   { path: '' , pathMatch: 'full', canActivate: [roleRedirectGuard], children: []},
   { path: 'login', loadComponent: () => import('./features/login/login').then((c) => c.Login) },
   { path: 'signup', loadComponent: () => import('./features/signup/signup').then((c) => c.Signup) },
-  // Restaurant
   {
     path: 'restaurant',
     loadComponent: () =>
@@ -49,7 +48,6 @@ export const routes: Routes = [
       },
     ],
   },
-  // Client Routes ============
   {
     path: 'portal',
     loadComponent: () =>

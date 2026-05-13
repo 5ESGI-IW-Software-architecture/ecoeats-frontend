@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { ApiService } from '../../../core/http/api.service';
+import { ApiService } from '../../core/http/api.service';
 import { map, Observable, switchMap } from 'rxjs';
-import { HttpResult } from '../../../core/types/api.types';
+import { HttpResult } from '../../core/types/api.types';
 
 type CreateCartPayload = {
   currentRestaurantId: string;

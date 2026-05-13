@@ -3,8 +3,8 @@ import { ApiService } from '../http/api.service';
 import { map, Observable, switchMap, tap } from 'rxjs';
 import { AuthTokens, ClientSignup, LoginDto, SignupDto, UserRoles } from './auth.types';
 import { HttpResult } from '../types/api.types';
-import { UserType } from '../types/user.type';
-import { AuthStore } from '../../store/auth.store';
+import { UserType } from '../../shared/types/user.type';
+import { AuthStore } from '../../shared/services/auth.store';
 
 @Injectable({
   providedIn: 'root',

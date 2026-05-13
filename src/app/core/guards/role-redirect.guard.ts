@@ -1,7 +1,7 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { AuthStore } from '../../store/auth.store';
+import { AuthStore } from '../../shared/services/auth.store';
 
 export const roleRedirectGuard: CanActivateFn = () => {
   const authService = inject(AuthService);

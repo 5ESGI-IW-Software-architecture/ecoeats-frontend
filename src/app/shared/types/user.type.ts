@@ -1,4 +1,4 @@
-import { Address, UserRoles } from '../auth/auth.types';
+import { Address, UserRoles } from '../../core/auth/auth.types';
 
 export type RestaurantUserType = {
   role: 'restaurant'

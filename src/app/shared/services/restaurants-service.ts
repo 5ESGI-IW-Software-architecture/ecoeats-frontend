@@ -1,12 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { ApiService } from '../../../../../core/http/api.service';
+import { ApiService } from '../../core/http/api.service';
 import { map, Observable } from 'rxjs';
 import {
   RestaurantInfoType,
   RestaurantWithDistance,
-} from '../../../restaurant/types/restaurant-profile.types';
-import { HttpResult } from '../../../../../core/types/api.types';
-import { PlateResponse } from '../../../restaurant/types/restaurant-menu.types';
+} from '../types/restaurant-profile.types';
+import { HttpResult } from '../../core/types/api.types';
+import { PlateResponse } from '../types/restaurant-menu.types';
 
 @Injectable({
   providedIn: 'root',

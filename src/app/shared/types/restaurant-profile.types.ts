@@ -1,4 +1,4 @@
-import { Address } from '../../../../core/auth/auth.types';
+import { Address } from '../../core/auth/auth.types';
 
 export type RestaurantProfileResponse = {
   id: string;
