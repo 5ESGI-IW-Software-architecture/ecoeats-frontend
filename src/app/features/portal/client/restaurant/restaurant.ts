@@ -15,11 +15,11 @@ import { executeObservable } from '../../../../core/utils/observables.utils';
 import { PlateResponse } from '../../../../shared/types/restaurant-menu.types';
 import { RestaurantInfoType } from '../../../../shared/types/restaurant-profile.types';
 import { Observable } from 'rxjs';
-import { CartService } from '../../../../shared/services/cart.service.ts.ts';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialog } from '../../../../shared/dialogs/confirmation-dialog/confirmation-dialog';
 import { FeedbackDisplayDialog } from '../../../../shared/dialogs/feedback-display-dialog/feedback-display-dialog';
 import { OrderService } from '../../../../shared/services/order-service';
+import { CartService } from '../../../../shared/services/cart.service.ts';
 
 @Component({
   selector: 'app-restaurant',

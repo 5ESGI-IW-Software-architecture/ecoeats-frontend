@@ -6,3 +6,26 @@
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+.menu-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.menu-input::placeholder {
+  color: rgba(255,255,255,0.2);
+}
+
+.menu-input:focus {
+  border-color: rgba(109,191,74,0.55);
+  box-shadow: 0 0 0 3px rgba(109,191,74,0.08);
+}
+

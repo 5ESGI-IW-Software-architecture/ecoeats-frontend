@@ -252,7 +252,8 @@ export class OrderStatus implements OnInit {
 
     this.eventSource = new EventSource(url);
 
-    this.eventSource.addEventListener('order-status', (event: MessageEvent) => {
+    this.eventSource.addEventListener('orders-status', (event: MessageEvent) => {
+      console.log('Order status event received:', event);
       const data = JSON.parse(event.data) as {
         status: OrderStatusEnum;
         estimatedPreparationTime?: number;
@@ -274,6 +275,7 @@ export class OrderStatus implements OnInit {
     });
 
     this.eventSource.addEventListener('delivery-status', (event: MessageEvent) => {
+      console.log('Delivery status event received:', event);
       const data = JSON.parse(event.data) as { status: DeliveryStatus };
       this.currentDeliveryStatus.set(data.status);
 

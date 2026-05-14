@@ -182,7 +182,17 @@
 }
 
 .checkout-btn:hover {
-  opacity: 0.88;
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(109,191,74,0.25);
+  opacity: 0.92;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(74,124,50,0.45);
 }
+
+.cart-panel {
+  transition: box-shadow 0.3s ease;
+}
+
+/* Plate image wrap for smooth transitions */
+.plate-card__img-wrap {
+  transition: all 0.25s ease;
+}
+

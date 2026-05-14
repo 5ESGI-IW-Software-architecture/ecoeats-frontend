@@ -50,22 +50,6 @@
 }
 
 @if (orderState().data; as order) {
-  @if (
-    (currentOrderStatus() === 'Accepted' || currentOrderStatus() === 'InPreparation')
-    && estimatedPreparationTime()
-    ) {
-    <div class="flex items-center gap-2 px-4 py-2.5 rounded-xl mt-2"
-         style="background:rgba(109,191,74,0.06); border:1px solid rgba(109,191,74,0.15);">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-           stroke-width="1.8" stroke="#6dbf4a" class="w-4 h-4 shrink-0">
-        <path stroke-linecap="round" stroke-linejoin="round"
-              d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-      </svg>
-      <p class="text-[12px] font-semibold" style="color:rgba(109,191,74,0.8);">
-        Estimated preparation: {{ estimatedPreparationTime() }} min
-      </p>
-    </div>
-  }
   <div class="fixed inset-0 flex flex-col overflow-hidden"
        style="font-family:'DM Sans',sans-serif; color:#fff; background:#0d1a0f;">
 
@@ -74,7 +58,9 @@
       <div class="flex items-center gap-4">
         <a routerLink="/portal/home"
            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-[12px] font-semibold tracking-[0.06em] uppercase"
-           style="background:rgba(13,26,15,0.65); border:1px solid rgba(109,191,74,0.22); color:rgba(255,255,255,0.8); backdrop-filter:blur(8px); text-decoration:none; transition:all 0.2s ease;">
+           style="background:rgba(13,26,15,0.65); border:1px solid rgba(109,191,74,0.22); color:rgba(255,255,255,0.8); backdrop-filter:blur(10px); text-decoration:none; transition:all 0.2s ease;"
+           onmouseenter="this.style.background='rgba(109,191,74,0.1)'; this.style.borderColor='rgba(109,191,74,0.35)'; this.style.color='#6dbf4a';"
+           onmouseleave="this.style.background='rgba(13,26,15,0.65)'; this.style.borderColor='rgba(109,191,74,0.22)'; this.style.color='rgba(255,255,255,0.8)';">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
@@ -82,6 +68,7 @@
           Home
         </a>
         <div class="flex flex-col gap-0.5">
+
           <h1 class="text-[22px] font-bold leading-none"
               style="font-family:'Playfair Display',serif; letter-spacing:-0.02em;">
             Order Tracking
@@ -90,7 +77,7 @@
       </div>
 
       <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full"
-           style="background:rgba(109,191,74,0.06); border:1px solid rgba(109,191,74,0.15);">
+           style="background:rgba(109,191,74,0.06); border:1px solid rgba(109,191,74,0.18);">
         <span class="relative flex h-2 w-2">
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style="background:#6dbf4a;"></span>
           <span class="relative inline-flex rounded-full h-2 w-2" style="background:#6dbf4a;"></span>

@@ -1,147 +1,161 @@
-<div class="h-full w-full flex gap-4 p-6 overflow-hidden"
+<div class="h-full w-full flex gap-5 p-6 overflow-hidden"
      style="font-family: 'DM Sans', sans-serif; color: #fff;">
 
-  <div class="w-[35%] flex flex-col rounded-2xl overflow-hidden shrink-0"
-       style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);">
+  <!-- ══ LEFT PANEL — Plate form ══ -->
+  <div class="w-[36%] flex flex-col rounded-2xl overflow-hidden shrink-0"
+       style="background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07);">
 
-    <div class="px-6 py-4 shrink-0"
+    <!-- Form header -->
+    <div class="px-6 py-4 shrink-0 flex items-center gap-3"
          style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-      <h3 class="text-sm font-bold text-white tracking-wide">
-        {{ selectedPlate() ? 'Edit Plate' : 'New Plate' }}
-      </h3>
-      <p class="text-xs mt-0.5" style="color: rgba(255,255,255,0.35);">
-        {{ selectedPlate() ? 'Modify the selected plate details' : 'Add a new plate to your menu' }}
-      </p>
+      <div class="w-8 h-8 rounded-[10px] flex items-center justify-center shrink-0"
+           style="background: rgba(109,191,74,0.1); border: 1px solid rgba(109,191,74,0.2);">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+             stroke-width="1.8" stroke="#6dbf4a" class="w-4 h-4">
+          @if (selectedPlate()) {
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125" />
+          } @else {
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          }
+        </svg>
+      </div>
+      <div>
+        <h3 class="text-[14px] font-bold text-white">
+          {{ selectedPlate() ? 'Edit Plate' : 'New Plate' }}
+        </h3>
+        <p class="text-[11px] mt-0.5" style="color: rgba(255,255,255,0.32);">
+          {{ selectedPlate() ? 'Update the details below' : 'Fill in the details to add a new plate' }}
+        </p>
+      </div>
     </div>
 
-    <div class="flex-1 overflow-y-auto px-6 py-5" [formGroup]="plateForm">
-      <div class="flex flex-col gap-4">
+    <!-- Form body -->
+    <div class="flex-1 overflow-y-auto px-6 py-5"
+         style="scrollbar-width:thin; scrollbar-color:rgba(109,191,74,0.12) transparent;"
+         [formGroup]="plateForm">
+      <div class="flex flex-col gap-5">
 
+        <!-- Image preview + URL -->
         <div>
           @if (plateForm.get('imageUrl')?.value) {
-            <div class="w-full h-36 rounded-xl overflow-hidden mb-3"
+            <div class="w-full h-40 rounded-xl overflow-hidden mb-3 relative"
                  style="border: 1px solid rgba(255,255,255,0.08);">
               <img [src]="plateForm.get('imageUrl')?.value"
                    class="w-full h-full object-cover"
                    alt="Plate preview" />
+              <div class="absolute inset-0 pointer-events-none"
+                   style="background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 50%);"></div>
             </div>
           } @else {
-            <div class="w-full h-36 rounded-xl flex flex-col items-center justify-center mb-3 gap-2"
-                 style="background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.12);">
+            <div class="w-full h-40 rounded-xl flex flex-col items-center justify-center mb-3 gap-2"
+                 style="background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1);">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                   stroke-width="1.5" stroke="rgba(255,255,255,0.2)" style="width:28px;height:28px;">
+                   stroke-width="1.3" stroke="rgba(255,255,255,0.15)" class="w-8 h-8">
                 <path stroke-linecap="round" stroke-linejoin="round"
                       d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
               </svg>
-              <span class="text-xs" style="color: rgba(255,255,255,0.2);">No image</span>
+              <span class="text-[11px]" style="color: rgba(255,255,255,0.2);">No image uploaded</span>
             </div>
           }
-          <label class="block text-xs font-semibold mb-1.5 uppercase tracking-widest"
-                 style="color: rgba(255,255,255,0.45);">Image URL</label>
+          <label class="block text-[10px] font-bold mb-1.5 uppercase tracking-widest"
+                 style="color: rgba(255,255,255,0.4);">Image URL</label>
           <input type="text"
                  formControlName="imageUrl"
                  placeholder="https://..."
-                 style="width:100%; padding: 10px 14px; border-radius: 10px;
-                        background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1);
-                        color: #fff; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none;"
-                 onfocus="this.style.borderColor='rgba(109,191,74,0.6)'; this.style.boxShadow='0 0 0 3px rgba(109,191,74,0.1)';"
-                 onblur="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.boxShadow='none';" />
+                 class="menu-input" />
         </div>
 
+        <!-- Name -->
         <div>
-          <label class="block text-xs font-semibold mb-1.5 uppercase tracking-widest"
-                 style="color: rgba(255,255,255,0.45);">Name *</label>
+          <label class="block text-[10px] font-bold mb-1.5 uppercase tracking-widest"
+                 style="color: rgba(255,255,255,0.4);">Name <span style="color:#6dbf4a;">*</span></label>
           <input type="text"
                  formControlName="name"
                  placeholder="e.g. Burger Classic"
-                 style="width:100%; padding: 10px 14px; border-radius: 10px;
-                        background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1);
-                        color: #fff; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none;"
-                 onfocus="this.style.borderColor='rgba(109,191,74,0.6)'; this.style.boxShadow='0 0 0 3px rgba(109,191,74,0.1)';"
-                 onblur="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.boxShadow='none';" />
+                 class="menu-input" />
           @if (plateForm.get('name')?.invalid && plateForm.get('name')?.touched) {
-            <p class="text-xs mt-1" style="color: rgba(239,68,68,0.85);">Name is required.</p>
+            <p class="text-[10px] mt-1.5" style="color: rgba(239,68,68,0.85);">Name is required.</p>
           }
         </div>
 
+        <!-- Description -->
         <div>
-          <label class="block text-xs font-semibold mb-1.5 uppercase tracking-widest"
-                 style="color: rgba(255,255,255,0.45);">Description *</label>
+          <label class="block text-[10px] font-bold mb-1.5 uppercase tracking-widest"
+                 style="color: rgba(255,255,255,0.4);">Description <span style="color:#6dbf4a;">*</span></label>
           <textarea formControlName="description"
-                    placeholder="Describe the plate..."
+                    placeholder="Describe the plate…"
                     rows="3"
-                    style="width:100%; padding: 10px 14px; border-radius: 10px;
-                           background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1);
-                           color: #fff; font-size: 13px; font-family: 'DM Sans', sans-serif;
-                           outline: none; resize: none;"
-                    onfocus="this.style.borderColor='rgba(109,191,74,0.6)'; this.style.boxShadow='0 0 0 3px rgba(109,191,74,0.1)';"
-                    onblur="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.boxShadow='none';"></textarea>
+                    class="menu-input"
+                    style="resize: none;"></textarea>
           @if (plateForm.get('description')?.invalid && plateForm.get('description')?.touched) {
-            <p class="text-xs mt-1" style="color: rgba(239,68,68,0.85);">Description is required.</p>
+            <p class="text-[10px] mt-1.5" style="color: rgba(239,68,68,0.85);">Description is required.</p>
           }
         </div>
 
+        <!-- Price + Stock -->
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-widest"
-                   style="color: rgba(255,255,255,0.45);">Unit Price (€) *</label>
+            <label class="block text-[10px] font-bold mb-1.5 uppercase tracking-widest"
+                   style="color: rgba(255,255,255,0.4);">Price (€) <span style="color:#6dbf4a;">*</span></label>
             <input type="number"
                    formControlName="unitPrice"
                    placeholder="0.00"
                    min="0"
-                   style="width:100%; padding: 10px 14px; border-radius: 10px;
-                          background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1);
-                          color: #fff; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none;"
-                   onfocus="this.style.borderColor='rgba(109,191,74,0.6)'; this.style.boxShadow='0 0 0 3px rgba(109,191,74,0.1)';"
-                   onblur="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.boxShadow='none';" />
+                   class="menu-input" />
             @if (plateForm.get('unitPrice')?.invalid && plateForm.get('unitPrice')?.touched) {
-              <p class="text-xs mt-1" style="color: rgba(239,68,68,0.85);">Valid price required.</p>
+              <p class="text-[10px] mt-1.5" style="color: rgba(239,68,68,0.85);">Valid price required.</p>
             }
           </div>
           <div>
-            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-widest"
-                   style="color: rgba(255,255,255,0.45);">Daily Stock *</label>
+            <label class="block text-[10px] font-bold mb-1.5 uppercase tracking-widest"
+                   style="color: rgba(255,255,255,0.4);">Daily Stock <span style="color:#6dbf4a;">*</span></label>
             <input type="number"
                    formControlName="dailyStock"
                    placeholder="0"
                    min="0"
-                   style="width:100%; padding: 10px 14px; border-radius: 10px;
-                          background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1);
-                          color: #fff; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none;"
-                   onfocus="this.style.borderColor='rgba(109,191,74,0.6)'; this.style.boxShadow='0 0 0 3px rgba(109,191,74,0.1)';"
-                   onblur="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.boxShadow='none';" />
+                   class="menu-input" />
             @if (plateForm.get('dailyStock')?.invalid && plateForm.get('dailyStock')?.touched) {
-              <p class="text-xs mt-1" style="color: rgba(239,68,68,0.85);">Stock is required.</p>
+              <p class="text-[10px] mt-1.5" style="color: rgba(239,68,68,0.85);">Stock is required.</p>
             }
           </div>
         </div>
 
+        <!-- Allergens -->
         <div>
-          <label class="block text-xs font-semibold mb-1.5 uppercase tracking-widest"
-                 style="color: rgba(255,255,255,0.45);">Allergens <span style="color:rgba(255,255,255,0.2);font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
-          <div class="flex flex-wrap gap-2 mb-2">
-            @for (allergen of allergens(); track allergen) {
-              <span class="flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full"
-                    style="background: rgba(212,136,30,0.15); color: #d4881e;
-                           border: 1px solid rgba(212,136,30,0.25);">
-                {{ allergen }}
-                <button type="button"
-                        (click)="removeAllergen(allergen)"
-                        style="background: none; border: none; cursor: pointer; color: #d4881e;
-                               line-height: 1; padding: 0; font-size: 12px;">✕</button>
-              </span>
-            }
-          </div>
+          <label class="block text-[10px] font-bold mb-2 uppercase tracking-widest"
+                 style="color: rgba(255,255,255,0.4);">
+            Allergens
+            <span style="color:rgba(255,255,255,0.2); font-weight:400; text-transform:none; letter-spacing:0;">(optional)</span>
+          </label>
+
+          @if (allergens().length > 0) {
+            <div class="flex flex-wrap gap-1.5 mb-3">
+              @for (allergen of allergens(); track allergen) {
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 rounded-full"
+                      style="background: rgba(212,136,30,0.12); color: #d4881e;
+                             border: 1px solid rgba(212,136,30,0.22);">
+                  {{ allergen }}
+                  <button type="button"
+                          (click)="removeAllergen(allergen)"
+                          style="background: none; border: none; cursor: pointer; color: rgba(212,136,30,0.7);
+                                 line-height: 1; padding: 0; font-size: 11px; display:flex; align-items:center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                         stroke-width="2.5" stroke="currentColor" style="width:10px;height:10px;">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </span>
+              }
+            </div>
+          }
+
           <div class="flex gap-2">
             <select [ngModel]="selectedAllergen()"
                     (ngModelChange)="selectedAllergen.set($event)"
                     [ngModelOptions]="{standalone: true}"
-                    style="flex:1; padding: 8px 12px; border-radius: 10px;
-                           background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1);
-                           color: #fff; font-size: 13px; font-family: 'DM Sans', sans-serif;
-                           outline: none; cursor: pointer; appearance: none;"
-                    onfocus="this.style.borderColor='rgba(109,191,74,0.6)';"
-                    onblur="this.style.borderColor='rgba(255,255,255,0.1)';">
+                    class="menu-input flex-1"
+                    style="cursor: pointer; appearance: none;">
               <option value="" style="background:#1a1a1a; color:rgba(255,255,255,0.4);">Select allergen…</option>
               @for (option of allergenOptions; track option) {
                 <option [value]="option"
@@ -154,10 +168,10 @@
             <button type="button"
                     (click)="addAllergen()"
                     [disabled]="!selectedAllergen()"
-                    style="padding: 8px 14px; border-radius: 10px; font-size: 12px; font-weight: 700;
-                           background: rgba(109,191,74,0.1); color: #6dbf4a;
-                           border: 1px solid rgba(109,191,74,0.2); cursor: pointer;"
-                    [style.opacity]="!selectedAllergen() ? '0.4' : '1'">
+                    class="px-4 py-2 rounded-xl text-[12px] font-bold transition-all"
+                    style="background: rgba(109,191,74,0.1); color: #6dbf4a;
+                           border: 1px solid rgba(109,191,74,0.22); cursor: pointer;"
+                    [style.opacity]="!selectedAllergen() ? '0.35' : '1'">
               + Add
             </button>
           </div>
@@ -166,228 +180,232 @@
       </div>
     </div>
 
-    <!-- Form Footer -->
-    <div class="px-6 py-4 flex-shrink-0 flex flex-col gap-2"
+    <!-- Form footer -->
+    <div class="px-6 py-4 shrink-0 flex flex-col gap-2.5"
          style="border-top: 1px solid rgba(255,255,255,0.06);">
       @if (mutationState().error) {
-        <p class="text-xs text-center" style="color: rgba(239,68,68,0.8);">
+        <p class="text-[11px] text-center py-2 px-3 rounded-xl"
+           style="color: rgba(239,68,68,0.85); background:rgba(239,68,68,0.07); border:1px solid rgba(239,68,68,0.15);">
           {{ mutationState().error?.errorMessage ?? 'An error occurred.' }}
         </p>
       }
       <div class="flex gap-2">
-      @if (selectedPlate()) {
-        <button type="button"
-                (click)="onSaveChanges()"
-                [disabled]="mutationState().loading"
-                class="flex-1 py-3 rounded-xl text-sm font-bold transition-all hover:scale-[1.02] active:scale-95"
-                style="background: linear-gradient(135deg, #4a7c32, #6dbf4a); color: #fff;
-                       border: none; cursor: pointer; letter-spacing: 0.04em;"
-                [style.opacity]="mutationState().loading ? '0.6' : '1'">
-          {{ mutationState().loading ? 'Saving…' : 'Save Changes' }}
-        </button>
-        <button type="button"
-                (click)="onDelete()"
-                [disabled]="mutationState().loading"
-                class="py-3 px-4 rounded-xl text-sm font-bold transition-all"
-                style="background: rgba(239,68,68,0.08); color: rgba(239,68,68,0.85);
-                       border: 1px solid rgba(239,68,68,0.2); cursor: pointer;"
-                [style.opacity]="mutationState().loading ? '0.6' : '1'">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-               stroke-width="2" stroke="currentColor" style="width:16px;height:16px;">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-          </svg>
-        </button>
-        <button type="button"
-                (click)="clearSelection()"
-                [disabled]="mutationState().loading"
-                class="py-3 px-4 rounded-xl text-sm font-bold transition-all"
-                style="background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.45);
-                       border: 1px solid rgba(255,255,255,0.08); cursor: pointer;">
-          ✕
-        </button>
-      } @else {
-        <button type="button"
-                (click)="onCreate()"
-                [disabled]="mutationState().loading"
-                class="flex-1 py-3 rounded-xl text-sm font-bold transition-all hover:scale-[1.02] active:scale-95"
-                style="background: linear-gradient(135deg, #4a7c32, #6dbf4a); color: #fff;
-                       border: none; cursor: pointer; letter-spacing: 0.04em;"
-                [style.opacity]="mutationState().loading ? '0.6' : '1'">
-          <span class="flex items-center justify-center gap-2">
-            @if (mutationState().loading) {
-              <div style="width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);
-                          border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;"></div>
-              Creating…
-            } @else {
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                   stroke-width="2.5" stroke="currentColor" style="width:15px;height:15px;">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-              </svg>
-              Create Plate
-            }
-          </span>
-        </button>
-      }
+        @if (selectedPlate()) {
+          <button type="button"
+                  (click)="onSaveChanges()"
+                  [disabled]="mutationState().loading"
+                  class="flex-1 py-3 rounded-xl text-[13px] font-bold transition-all hover:scale-[1.02] active:scale-[0.97]"
+                  style="background: linear-gradient(135deg, #4a7c32, #6dbf4a); color: #fff;
+                         border: none; cursor: pointer; letter-spacing: 0.04em;"
+                  [style.opacity]="mutationState().loading ? '0.6' : '1'">
+            {{ mutationState().loading ? 'Saving…' : 'Save Changes' }}
+          </button>
+          <button type="button"
+                  (click)="onDelete()"
+                  [disabled]="mutationState().loading"
+                  class="py-3 px-4 rounded-xl text-[13px] font-bold transition-all hover:scale-[1.02]"
+                  style="background: rgba(239,68,68,0.08); color: rgba(239,68,68,0.85);
+                         border: 1px solid rgba(239,68,68,0.2); cursor: pointer;"
+                  [style.opacity]="mutationState().loading ? '0.6' : '1'">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                 stroke-width="2" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+            </svg>
+          </button>
+          <button type="button"
+                  (click)="clearSelection()"
+                  [disabled]="mutationState().loading"
+                  class="py-3 px-4 rounded-xl text-[13px] font-semibold transition-all"
+                  style="background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.4);
+                         border: 1px solid rgba(255,255,255,0.08); cursor: pointer;">
+            ✕
+          </button>
+        } @else {
+          <button type="button"
+                  (click)="onCreate()"
+                  [disabled]="mutationState().loading"
+                  class="flex-1 py-3 rounded-xl text-[13px] font-bold transition-all hover:scale-[1.02] active:scale-[0.97]"
+                  style="background: linear-gradient(135deg, #4a7c32, #6dbf4a); color: #fff;
+                         border: none; cursor: pointer; letter-spacing: 0.04em;"
+                  [style.opacity]="mutationState().loading ? '0.6' : '1'">
+            <span class="flex items-center justify-center gap-2">
+              @if (mutationState().loading) {
+                <div style="width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);
+                            border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;"></div>
+                Creating…
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                     stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                Create Plate
+              }
+            </span>
+          </button>
+        }
       </div>
     </div>
 
   </div>
 
+  <!-- ══ RIGHT PANEL — Plates table ══ -->
   <div class="flex-1 flex flex-col rounded-2xl overflow-hidden min-w-0"
-       style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);">
+       style="background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07);">
 
-    <div class="px-6 py-4 flex items-center justify-between flex-shrink-0"
+    <!-- Table header -->
+    <div class="px-6 py-4 flex items-center justify-between shrink-0"
          style="border-bottom: 1px solid rgba(255,255,255,0.06);">
       <div>
-        <h3 class="text-sm font-bold text-white tracking-wide">Menu Plates</h3>
-        <p class="text-xs mt-0.5" style="color: rgba(255,255,255,0.35);">
+        <h3 class="text-[14px] font-bold text-white">Menu Plates</h3>
+        <p class="text-[11px] mt-0.5" style="color: rgba(255,255,255,0.32);">
           {{ platesState().data?.length ?? 0 }} plates on your menu
         </p>
       </div>
       <div class="relative">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-             stroke-width="1.8" stroke="rgba(255,255,255,0.3)"
-             style="width:16px;height:16px; position:absolute; left:12px; top:50%; transform:translateY(-50%);">
+             stroke-width="1.8" stroke="rgba(255,255,255,0.25)"
+             class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none">
           <path stroke-linecap="round" stroke-linejoin="round"
                 d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
         </svg>
         <input type="text"
                [ngModel]="searchQuery()"
                (ngModelChange)="searchQuery.set($event)"
-               placeholder="Search plates..."
-               style="padding: 8px 14px 8px 36px; border-radius: 10px; width: 220px;
-                      background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1);
-                      color: #fff; font-size: 12px; font-family: 'DM Sans', sans-serif; outline: none;"
-               onfocus="this.style.borderColor='rgba(109,191,74,0.6)';"
-               onblur="this.style.borderColor='rgba(255,255,255,0.1)';" />
+               placeholder="Search plates…"
+               class="menu-input pl-9"
+               style="width: 220px; padding-left: 36px;" />
       </div>
     </div>
 
-    <!-- Column Headers -->
-    <div class="grid px-6 py-3 flex-shrink-0"
-         style="grid-template-columns: 56px 1fr 1fr 100px 100px 80px;
+    <!-- Column headers -->
+    <div class="grid px-6 py-2.5 shrink-0"
+         style="grid-template-columns: 52px 1fr 1fr 100px 90px 80px;
                 border-bottom: 1px solid rgba(255,255,255,0.05);">
       <span></span>
-      <span class="text-xs font-bold uppercase tracking-widest"
-            style="color: rgba(255,255,255,0.25); font-size: 10px;">Name</span>
-      <span class="text-xs font-bold uppercase tracking-widest"
-            style="color: rgba(255,255,255,0.25); font-size: 10px;">Description</span>
-      <span class="text-xs font-bold uppercase tracking-widest text-center"
-            style="color: rgba(255,255,255,0.25); font-size: 10px;">Price</span>
-      <span class="text-xs font-bold uppercase tracking-widest text-center"
-            style="color: rgba(255,255,255,0.25); font-size: 10px;">Stock</span>
-      <span class="text-xs font-bold uppercase tracking-widest text-center"
-            style="color: rgba(255,255,255,0.25); font-size: 10px;">Status</span>
+      <span class="text-[10px] font-black uppercase tracking-widest" style="color: rgba(255,255,255,0.22);">Name</span>
+      <span class="text-[10px] font-black uppercase tracking-widest" style="color: rgba(255,255,255,0.22);">Description</span>
+      <span class="text-[10px] font-black uppercase tracking-widest text-center" style="color: rgba(255,255,255,0.22);">Price</span>
+      <span class="text-[10px] font-black uppercase tracking-widest text-center" style="color: rgba(255,255,255,0.22);">Stock</span>
+      <span class="text-[10px] font-black uppercase tracking-widest text-center" style="color: rgba(255,255,255,0.22);">Status</span>
     </div>
 
-    <!-- Table Rows -->
-    <div class="flex-1 overflow-y-auto">
+    <!-- Table rows -->
+    <div class="flex-1 overflow-y-auto" style="scrollbar-width:thin; scrollbar-color:rgba(109,191,74,0.1) transparent;">
+
       @if (platesState().loading) {
         <div class="flex items-center justify-center h-48 gap-3">
           <div style="width:20px;height:20px;border:2px solid rgba(109,191,74,0.3);
                       border-top-color:#6dbf4a;border-radius:50%;animation:spin 0.8s linear infinite;"></div>
-          <span class="text-sm" style="color: rgba(255,255,255,0.3);">Loading plates…</span>
+          <span class="text-[13px]" style="color: rgba(255,255,255,0.3);">Loading plates…</span>
         </div>
       } @else if (platesState().error) {
-        <div class="flex flex-col items-center justify-center h-48 gap-2">
-          <span class="text-sm" style="color: rgba(239,68,68,0.8);">Failed to load plates.</span>
+        <div class="flex flex-col items-center justify-center h-48 gap-3">
+          <span class="text-[13px]" style="color: rgba(239,68,68,0.8);">Failed to load plates.</span>
           <button type="button" (click)="loadPlates()"
-                  style="font-size:12px;color:#6dbf4a;background:none;border:none;cursor:pointer;
-                         text-decoration:underline;">Retry</button>
+                  class="text-[12px] px-4 py-2 rounded-lg transition-all"
+                  style="color:#6dbf4a; background:rgba(109,191,74,0.08); border:1px solid rgba(109,191,74,0.18); cursor:pointer;">
+            Retry
+          </button>
         </div>
       } @else {
-      @for (plate of filteredPlates(); track plate.id) {
-        <div class="grid px-6 py-3.5 cursor-pointer transition-all duration-200 items-center"
-             style="grid-template-columns: 56px 1fr 1fr 100px 100px 80px;"
-             [style.background]="selectedPlate()?.id === plate.id ? 'rgba(109,191,74,0.07)' : 'transparent'"
-             [style.borderLeft]="selectedPlate()?.id === plate.id ? '3px solid #6dbf4a' : '3px solid transparent'"
-             (click)="selectPlate(plate)"
-             onmouseenter="if(!this.style.borderLeft.includes('6dbf4a')) this.style.background='rgba(255,255,255,0.03)'"
-             onmouseleave="if(!this.style.borderLeft.includes('6dbf4a')) this.style.background='transparent'">
 
-          <!-- Image -->
-          <div class="w-10 h-10 rounded-xl overflow-hidden flex-shrink-0"
-               style="border: 1px solid rgba(255,255,255,0.08);">
-            @if (plate.imageUrl) {
-              <img [src]="plate.imageUrl" class="w-full h-full object-cover" [alt]="plate.name" />
-            } @else {
-              <div class="w-full h-full flex items-center justify-center"
-                   style="background: rgba(255,255,255,0.05);">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                     stroke-width="1.5" stroke="rgba(255,255,255,0.2)" style="width:16px;height:16px;">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 8.25v-1.5m-6 1.5v-1.5m12 9.75-1.5.75a3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-1.5-.75m16.5-4.5-1.5.75a3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-1.5-.75" />
-                </svg>
-              </div>
-            }
-          </div>
+        @for (plate of filteredPlates(); track plate.id) {
+          <div class="grid px-6 py-3.5 cursor-pointer transition-all duration-150 items-center border-l-[3px]"
+               style="grid-template-columns: 52px 1fr 1fr 100px 90px 80px;"
+               [style.background]="selectedPlate()?.id === plate.id ? 'rgba(109,191,74,0.06)' : 'transparent'"
+               [style.border-left-color]="selectedPlate()?.id === plate.id ? '#6dbf4a' : 'transparent'"
+               (click)="selectPlate(plate)"
+               onmouseenter="if(!this.style.borderLeftColor.includes('6dbf4a')) this.style.background='rgba(255,255,255,0.025)'"
+               onmouseleave="if(!this.style.borderLeftColor.includes('6dbf4a')) this.style.background='transparent'">
 
-          <!-- Name -->
-          <div class="min-w-0 pr-4">
-            <p class="text-sm font-bold text-white truncate">{{ plate.name }}</p>
-            @if (plate.allergens?.length) {
-              <div class="flex gap-1 mt-1 flex-wrap">
-                @for (a of plate.allergens!.slice(0, 2); track a) {
-                  <span class="text-xs px-1.5 py-0.5 rounded-md"
-                        style="background: rgba(212,136,30,0.12); color: #d4881e; font-size: 10px;">
-                    {{ a }}
-                  </span>
-                }
-                @if (plate.allergens!.length > 2) {
-                  <span class="text-xs px-1.5 py-0.5 rounded-md"
-                        style="background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.4); font-size: 10px;">
-                    +{{ plate.allergens!.length - 2 }}
-                  </span>
-                }
-              </div>
-            }
-          </div>
+            <!-- Image -->
+            <div class="w-10 h-10 rounded-xl overflow-hidden shrink-0"
+                 style="border: 1px solid rgba(255,255,255,0.07);">
+              @if (plate.imageUrl) {
+                <img [src]="plate.imageUrl" class="w-full h-full object-cover" [alt]="plate.name" />
+              } @else {
+                <div class="w-full h-full flex items-center justify-center"
+                     style="background: rgba(255,255,255,0.04);">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                       stroke-width="1.5" stroke="rgba(255,255,255,0.18)" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 8.25v-1.5m-6 1.5v-1.5m12 9.75-1.5.75a3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-1.5-.75m16.5-4.5-1.5.75a3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-1.5-.75" />
+                  </svg>
+                </div>
+              }
+            </div>
 
-          <p class="text-xs pr-4 truncate" style="color: rgba(255,255,255,0.4);">
-            {{ plate.description }}
-          </p>
+            <!-- Name + allergens -->
+            <div class="min-w-0 pr-4">
+              <p class="text-[13px] font-bold text-white truncate">{{ plate.name }}</p>
+              @if (plate.allergens?.length) {
+                <div class="flex gap-1 mt-1 flex-wrap">
+                  @for (a of plate.allergens!.slice(0, 2); track a) {
+                    <span class="text-[9px] font-bold px-1.5 py-0.5 rounded-md"
+                          style="background: rgba(212,136,30,0.12); color: #d4881e; border:1px solid rgba(212,136,30,0.2);">
+                      {{ a }}
+                    </span>
+                  }
+                  @if (plate.allergens!.length > 2) {
+                    <span class="text-[9px] px-1.5 py-0.5 rounded-md"
+                          style="background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.35); border:1px solid rgba(255,255,255,0.08);">
+                      +{{ plate.allergens!.length - 2 }}
+                    </span>
+                  }
+                </div>
+              }
+            </div>
 
-          <p class="text-sm font-black text-center"
-             style="color: #6dbf4a; font-family: 'Playfair Display', serif;">
-            €{{ plate.unitPrice }}
-          </p>
+            <!-- Description -->
+            <p class="text-[11px] pr-4 truncate" style="color: rgba(255,255,255,0.38);">
+              {{ plate.description }}
+            </p>
 
-          <div class="flex flex-col items-center gap-1">
-            <p class="text-sm font-bold text-center text-white">{{ plate.dailyStock }}</p>
-            <div class="w-12 h-1 rounded-full overflow-hidden"
-                 style="background: rgba(255,255,255,0.08);">
-              <div class="h-full rounded-full"
-                   [style.width]="Math.min((plate.dailyStock / 50) * 100, 100) + '%'"
-                   [style.background]="plate.dailyStock > 10 ? '#4a7c32' : plate.dailyStock > 0 ? '#d4881e' : 'rgba(239,68,68,0.7)'">
+            <!-- Price -->
+            <p class="text-[14px] font-black text-center"
+               style="color: #6dbf4a; font-family: 'Playfair Display', serif;">
+              €{{ plate.unitPrice }}
+            </p>
+
+            <!-- Stock -->
+            <div class="flex flex-col items-center gap-1.5">
+              <p class="text-[13px] font-bold text-center text-white">{{ plate.dailyStock }}</p>
+              <div class="w-12 h-1 rounded-full overflow-hidden"
+                   style="background: rgba(255,255,255,0.07);">
+                <div class="h-full rounded-full transition-all duration-500"
+                     [style.width]="Math.min((plate.dailyStock / 50) * 100, 100) + '%'"
+                     [style.background]="plate.dailyStock > 10 ? '#4a7c32' : plate.dailyStock > 0 ? '#d4881e' : 'rgba(239,68,68,0.7)'">
+                </div>
               </div>
             </div>
+
+            <!-- Status badge -->
+            <div class="flex justify-center">
+              <span class="text-[10px] font-bold px-2.5 py-1 rounded-full"
+                    [style.background]="plate.dailyStock > 0 ? 'rgba(109,191,74,0.1)' : 'rgba(239,68,68,0.08)'"
+                    [style.color]="plate.dailyStock > 0 ? '#6dbf4a' : 'rgba(239,68,68,0.8)'"
+                    [style.border]="plate.dailyStock > 0 ? '1px solid rgba(109,191,74,0.22)' : '1px solid rgba(239,68,68,0.2)'">
+                {{ plate.dailyStock > 0 ? 'Available' : 'Out' }}
+              </span>
+            </div>
+
           </div>
 
-          <div class="flex justify-center">
-            <span class="text-xs font-bold px-2.5 py-1 rounded-full"
-                  [style.background]="plate.dailyStock > 0 ? 'rgba(109,191,74,0.12)' : 'rgba(239,68,68,0.1)'"
-                  [style.color]="plate.dailyStock > 0 ? '#6dbf4a' : 'rgba(239,68,68,0.8)'"
-                  [style.border]="plate.dailyStock > 0 ? '1px solid rgba(109,191,74,0.2)' : '1px solid rgba(239,68,68,0.2)'">
-              {{ plate.dailyStock > 0 ? 'Available' : 'Out' }}
-            </span>
+          <div class="mx-6" style="height: 1px; background: rgba(255,255,255,0.035);"></div>
+        }
+
+        @if (filteredPlates().length === 0) {
+          <div class="flex flex-col items-center justify-center h-48 gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                 stroke-width="1.3" stroke="rgba(255,255,255,0.12)" class="w-10 h-10">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 8.25v-1.5m-6 1.5v-1.5m12 9.75-1.5.75a3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-1.5-.75m16.5-4.5-1.5.75a3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-1.5-.75" />
+            </svg>
+            <p class="text-[13px]" style="color: rgba(255,255,255,0.2);">No plates found</p>
           </div>
+        }
 
-        </div>
-
-        <div class="mx-6" style="height: 1px; background: rgba(255,255,255,0.04);"></div>
-      }
-
-      @if (filteredPlates().length === 0) {
-        <div class="flex flex-col items-center justify-center h-48 gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-               stroke-width="1.5" stroke="rgba(255,255,255,0.15)" style="width:40px;height:40px;">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 8.25v-1.5m-6 1.5v-1.5m12 9.75-1.5.75a3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-1.5-.75m16.5-4.5-1.5.75a3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-1.5-.75" />
-          </svg>
-          <p class="text-sm" style="color: rgba(255,255,255,0.2);">No plates found</p>
-        </div>
-      }
       } <!-- end @else loading/error -->
     </div>
 

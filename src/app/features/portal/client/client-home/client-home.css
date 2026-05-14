@@ -8,17 +8,16 @@
 }
 
 .restaurant-card:hover {
-  border-color: rgba(109,191,74,0.25) !important;
-  transform: translateY(-4px);
+  border-color: rgba(109,191,74,0.28) !important;
+  transform: translateY(-6px);
   background: rgba(255,255,255,0.035) !important;
-  box-shadow: 0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(109,191,74,0.08) inset;
+  box-shadow: 0 28px 56px rgba(0,0,0,0.6), 0 0 0 1px rgba(109,191,74,0.06) inset;
 }
 
-.restaurant-card:hover .restaurant-card__img { transform: scale(1.06); }
+.restaurant-card:hover .restaurant-card__img { transform: scale(1.07); }
 .restaurant-card:hover .card-arrow {
-  background: rgba(109,191,74,0.15) !important;
-  border-color: rgba(109,191,74,0.3) !important;
-  transform: translateX(2px);
+  color: #6dbf4a !important;
+  transform: translateX(4px);
 }
 
 @keyframes skeleton-shimmer {

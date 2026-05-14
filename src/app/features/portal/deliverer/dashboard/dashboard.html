@@ -1,63 +1,91 @@
 <div class="h-full w-full flex flex-col overflow-hidden"
      style="font-family:'DM Sans',sans-serif; color:#fff; background:#0d1a0f;">
 
-  <div class="shrink-0 flex items-center justify-between px-8 py-5"
-       style="border-bottom:1px solid rgba(255,255,255,0.07);">
+  <!-- HEADER -->
+  <div class="shrink-0 flex items-center justify-between px-8 py-4 relative"
+       style="border-bottom:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.012);">
 
-    <div class="flex items-center gap-4">
-      <div class="w-11 h-11 rounded-full flex items-center justify-center shrink-0"
-           style="background:rgba(109,191,74,0.12); border:2px solid rgba(109,191,74,0.25);">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-             stroke-width="1.8" stroke="#6dbf4a" class="w-5 h-5">
-          <path stroke-linecap="round" stroke-linejoin="round"
-                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-        </svg>
-      </div>
-      <div>
-        <div class="flex items-center gap-2">
-          <h1 class="text-[16px] font-bold" style="font-family:'Playfair Display',serif;">
-            {{ deliverer().username }}
-          </h1>
-          @if (deliverer().isExpert) {
-            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-black tracking-[0.12em] uppercase"
-                  style="background:linear-gradient(135deg,rgba(212,136,30,0.2),rgba(255,183,77,0.15));
-                         border:1px solid rgba(212,136,30,0.4); color:#d4881e;">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-2.5 h-2.5">
-                <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" />
-              </svg>
-              Expert
-            </span>
-          }
+    <div class="flex items-center gap-5">
+      <!-- Brand mark -->
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+             style="background:linear-gradient(135deg,#4a7c32,#6dbf4a); box-shadow:0 4px 12px rgba(109,191,74,0.3);">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke-width="2" stroke="#0d1a0f" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+          </svg>
         </div>
-        <p class="text-[11px]" style="color:rgba(255,255,255,0.35);">{{ deliverer().email }}</p>
+        <span class="text-[13px] font-black tracking-widest uppercase"
+              style="color:rgba(255,255,255,0.88);">EcoEats</span>
+        <span class="text-[8px] font-bold tracking-[0.18em] uppercase px-1.5 py-0.5 rounded-md"
+              style="background:rgba(109,191,74,0.08); color:rgba(109,191,74,0.6); border:1px solid rgba(109,191,74,0.14);">
+          Delivery
+        </span>
+      </div>
+
+      <div class="w-px h-6 shrink-0" style="background:rgba(255,255,255,0.08);"></div>
+
+      <!-- User info -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+             style="background:rgba(109,191,74,0.09); border:1.5px solid rgba(109,191,74,0.28);
+                    box-shadow:0 0 14px rgba(109,191,74,0.08);">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke-width="1.8" stroke="#6dbf4a" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-[15px] font-bold" style="font-family:'Playfair Display',serif;">
+              {{ deliverer().username }}
+            </h1>
+            @if (deliverer().isExpert) {
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-black tracking-[0.12em] uppercase"
+                    style="background:linear-gradient(135deg,rgba(212,136,30,0.18),rgba(255,183,77,0.1));
+                           border:1px solid rgba(212,136,30,0.32); color:#d4881e;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-2.5 h-2.5">
+                  <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" />
+                </svg>
+                Expert
+              </span>
+            }
+          </div>
+          <p class="text-[11px]" style="color:rgba(255,255,255,0.3);">{{ deliverer().email }}</p>
+        </div>
       </div>
     </div>
 
-    <div class="flex items-center gap-3">
-      <span class="text-[12px] font-semibold" style="color:rgba(255,255,255,0.5);">Availability</span>
+    <!-- Availability widget -->
+    <div class="flex items-center gap-3 px-4 py-2.5 rounded-2xl"
+         style="background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.06);">
+      <div class="flex flex-col items-end">
+        <span class="text-[9px] font-bold tracking-[0.12em] uppercase"
+              style="color:rgba(255,255,255,0.3);">Status</span>
+        <span class="text-[12px] font-bold leading-tight"
+              [style.color]="isAvailable() ? '#6dbf4a' : 'rgba(255,255,255,0.28)'">
+          {{ isAvailable() ? 'Available' : 'Offline' }}
+        </span>
+      </div>
       <button (click)="toggleAvailability()"
               [disabled]="updateAvailabilityState().loading"
               class="relative inline-flex items-center rounded-full transition-all duration-300"
               [style.cursor]="updateAvailabilityState().loading ? 'wait' : 'pointer'"
               [style.opacity]="updateAvailabilityState().loading ? '0.65' : '1'"
               style="width:52px; height:28px;"
-              [style.background]="isAvailable() ? 'linear-gradient(135deg,#4a7c32,#6dbf4a)' : 'rgba(255,255,255,0.08)'"
-              [style.box-shadow]="isAvailable() ? '0 0 16px rgba(109,191,74,0.3)' : 'none'">
+              [style.background]="isAvailable() ? 'linear-gradient(135deg,#4a7c32,#6dbf4a)' : 'rgba(255,255,255,0.06)'"
+              [style.box-shadow]="isAvailable() ? '0 0 18px rgba(109,191,74,0.28), inset 0 1px 0 rgba(255,255,255,0.12)' : 'none'">
         <span class="absolute w-5 h-5 rounded-full transition-all duration-300"
               [class.animate-pulse]="updateAvailabilityState().loading"
               [style.right]="isAvailable() ? '4px' : 'auto'"
               [style.left]="isAvailable() ? 'auto' : '4px'"
               style="background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.3);"></span>
       </button>
-      <div class="flex items-center gap-1.5">
-        <span class="w-1.5 h-1.5 rounded-full"
-              [class.animate-pulse]="isAvailable()"
-              [style.background]="isAvailable() ? '#6dbf4a' : 'rgba(255,255,255,0.2)'"></span>
-        <span class="text-[12px] font-bold"
-              [style.color]="isAvailable() ? '#6dbf4a' : 'rgba(255,255,255,0.3)'">
-          {{ isAvailable() ? 'Available' : 'Unavailable' }}
-        </span>
-      </div>
+      <span class="w-1.5 h-1.5 rounded-full shrink-0"
+            [class.animate-pulse]="isAvailable()"
+            [style.background]="isAvailable() ? '#6dbf4a' : 'rgba(255,255,255,0.15)'"></span>
     </div>
   </div>
 
@@ -65,124 +93,152 @@
   <div class="flex-1 flex overflow-hidden min-h-0">
 
     <!-- LEFT RAIL -->
-    <div class="flex flex-col shrink-0 border-r gap-5 p-6 overflow-y-auto"
-         style="width:280px; border-color:rgba(255,255,255,0.07);
-                scrollbar-width:thin; scrollbar-color:rgba(109,191,74,0.12) transparent;">
+    <div class="flex flex-col shrink-0 gap-5 p-5 overflow-y-auto"
+         style="width:272px; border-right:1px solid rgba(255,255,255,0.06);
+                background:rgba(0,0,0,0.07);
+                scrollbar-width:thin; scrollbar-color:rgba(109,191,74,0.1) transparent;">
 
+      <!-- Today stats -->
       <div>
-        <p class="text-[10px] font-bold tracking-[0.15em] uppercase mb-3"
-           style="color:rgba(109,191,74,0.5);">Today</p>
+        <p class="text-[9px] font-bold tracking-[0.18em] uppercase mb-3"
+           style="color:rgba(109,191,74,0.42);">Today's Activity</p>
         <div class="flex flex-col gap-2">
-          <div class="flex items-center justify-between px-4 py-3 rounded-xl"
-               style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06);">
-            <div class="flex items-center gap-2.5">
+
+          <div class="flex items-center gap-3 px-4 py-3.5 rounded-2xl"
+               style="background:rgba(255,255,255,0.022); border:1px solid rgba(255,255,255,0.05);">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+                 style="background:rgba(109,191,74,0.07); border:1px solid rgba(109,191,74,0.12);">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                   stroke-width="1.8" stroke="rgba(109,191,74,0.6)" class="w-4 h-4 shrink-0">
+                   stroke-width="1.8" stroke="#6dbf4a" class="w-4 h-4">
                 <path stroke-linecap="round" stroke-linejoin="round"
                       d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
               </svg>
-              <span class="text-[12px]" style="color:rgba(255,255,255,0.5);">Deliveries</span>
             </div>
-            <span class="text-[16px] font-black"
-                  style="color:#fff; font-family:'Playfair Display',serif;">
-              {{ deliverer().deliveriesCount }}
-            </span>
+            <div>
+              <p class="text-[9px] font-bold tracking-[0.1em] uppercase"
+                 style="color:rgba(255,255,255,0.28);">Deliveries</p>
+              <span class="text-[22px] font-black leading-tight"
+                    style="color:#fff; font-family:'Playfair Display',serif;">
+                {{ deliverer().deliveriesCount }}
+              </span>
+            </div>
           </div>
-          <div class="flex items-center justify-between px-4 py-3 rounded-xl"
-               style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06);">
-            <div class="flex items-center gap-2.5">
+
+          <div class="flex items-center gap-3 px-4 py-3.5 rounded-2xl"
+               style="background:rgba(109,191,74,0.04); border:1px solid rgba(109,191,74,0.09);">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+                 style="background:rgba(109,191,74,0.1); border:1px solid rgba(109,191,74,0.18);">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                   stroke-width="1.8" stroke="rgba(109,191,74,0.6)" class="w-4 h-4 shrink-0">
+                   stroke-width="1.8" stroke="#6dbf4a" class="w-4 h-4">
                 <path stroke-linecap="round" stroke-linejoin="round"
                       d="M14.25 7.756a4.5 4.5 0 1 0 0 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
               </svg>
-              <span class="text-[12px]" style="color:rgba(255,255,255,0.5);">Earned</span>
             </div>
-            <span class="text-[16px] font-black"
-                  style="color:#6dbf4a; font-family:'Playfair Display',serif;">
-              €{{ deliverer().walletBalance.toFixed(2) }}
-            </span>
+            <div>
+              <p class="text-[9px] font-bold tracking-[0.1em] uppercase"
+                 style="color:rgba(109,191,74,0.5);">Earned</p>
+              <span class="text-[22px] font-black leading-tight"
+                    style="color:#6dbf4a; font-family:'Playfair Display',serif;">
+                €{{ deliverer().walletBalance.toFixed(2) }}
+              </span>
+            </div>
           </div>
+
         </div>
       </div>
 
+      <!-- Expert status -->
       @if (deliverer().isExpert) {
-        <div class="px-4 py-4 rounded-xl"
-             style="background:linear-gradient(135deg,rgba(212,136,30,0.08),rgba(212,136,30,0.04));
-                    border:1px solid rgba(212,136,30,0.2);">
-          <div class="flex items-center justify-between mb-3">
-            <p class="text-[10px] font-bold tracking-[0.15em] uppercase"
-               style="color:rgba(212,136,30,0.7);">Expert Status</p>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4881e" class="w-4 h-4 opacity-70">
-              <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" />
-            </svg>
+        <div class="px-4 py-4 rounded-2xl relative overflow-hidden"
+             style="background:linear-gradient(135deg,rgba(212,136,30,0.09),rgba(212,136,30,0.04));
+                    border:1px solid rgba(212,136,30,0.18);">
+          <div class="absolute top-0 right-0 w-20 h-20 pointer-events-none"
+               style="background:radial-gradient(circle,rgba(212,136,30,0.18) 0%,transparent 70%);
+                      transform:translate(25%,-25%);"></div>
+          <div class="flex items-center gap-2.5 mb-2.5 relative">
+            <div class="w-7 h-7 rounded-xl flex items-center justify-center shrink-0"
+                 style="background:rgba(212,136,30,0.14); border:1px solid rgba(212,136,30,0.24);">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4881e" class="w-3.5 h-3.5">
+                <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <p class="text-[11px] font-bold relative" style="color:#d4881e;">Expert Deliverer</p>
           </div>
-          <p class="text-[12px] font-semibold mb-1" style="color:rgba(255,255,255,0.8);">Active Expert</p>
-          <p class="text-[10px] leading-relaxed" style="color:rgba(255,255,255,0.35);">
-            You can accept up to 2 deliveries simultaneously from the same restaurant.
+          <p class="text-[10px] leading-relaxed relative" style="color:rgba(255,255,255,0.38);">
+            Accept up to <span style="color:rgba(212,136,30,0.8); font-weight:700;">2 deliveries</span> simultaneously from the same restaurant.
           </p>
         </div>
       }
 
+      <!-- Capacity -->
       <div>
-        <p class="text-[10px] font-bold tracking-[0.15em] uppercase mb-3"
-           style="color:rgba(109,191,74,0.5);">Current Capacity</p>
+        <p class="text-[9px] font-bold tracking-[0.18em] uppercase mb-3"
+           style="color:rgba(109,191,74,0.42);">Capacity</p>
         <div class="flex gap-2">
           @for (slot of [0, 1]; track slot) {
             @if (slot < activeDeliveries().length) {
-              <div class="flex-1 px-3 py-2.5 rounded-xl flex flex-col items-center gap-1.5"
-                   style="background:rgba(109,191,74,0.08); border:1px solid rgba(109,191,74,0.2);">
-                <span class="w-2 h-2 rounded-full" style="background:#6dbf4a;"></span>
-                <span class="text-[9px] font-bold uppercase tracking-widest"
-                      style="color:rgba(109,191,74,0.6);">Active</span>
+              <div class="flex-1 px-3 py-3 rounded-2xl flex flex-col items-center gap-2"
+                   style="background:rgba(109,191,74,0.07); border:1px solid rgba(109,191,74,0.16);">
+                <div class="w-3 h-3 rounded-full"
+                     style="background:#6dbf4a; box-shadow:0 0 8px rgba(109,191,74,0.45);"></div>
+                <span class="text-[8px] font-bold uppercase tracking-widest"
+                      style="color:rgba(109,191,74,0.55);">Active</span>
               </div>
             } @else if (deliverer().isExpert || slot === 0) {
-              <div class="flex-1 px-3 py-2.5 rounded-xl flex flex-col items-center gap-1.5"
-                   style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.07);">
-                <span class="w-2 h-2 rounded-full" style="background:rgba(255,255,255,0.15);"></span>
-                <span class="text-[9px] font-bold uppercase tracking-widest"
-                      style="color:rgba(255,255,255,0.2);">Free</span>
+              <div class="flex-1 px-3 py-3 rounded-2xl flex flex-col items-center gap-2"
+                   style="background:rgba(255,255,255,0.015); border:1px solid rgba(255,255,255,0.055);">
+                <div class="w-3 h-3 rounded-full"
+                     style="background:transparent; border:1.5px solid rgba(255,255,255,0.12);"></div>
+                <span class="text-[8px] font-bold uppercase tracking-widest"
+                      style="color:rgba(255,255,255,0.14);">Free</span>
               </div>
             }
           }
         </div>
       </div>
+
     </div>
 
     <!-- RIGHT PANEL -->
     <div class="flex-1 flex flex-col overflow-hidden min-w-0">
 
+      <!-- Panel header -->
       <div class="flex items-center justify-between px-6 py-4 shrink-0"
-           style="border-bottom:1px solid rgba(255,255,255,0.06);">
+           style="border-bottom:1px solid rgba(255,255,255,0.05); background:rgba(255,255,255,0.008);">
         <div class="flex items-center gap-2.5">
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+          <span class="relative flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
                   style="background:#6dbf4a;"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2" style="background:#6dbf4a;"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5" style="background:#6dbf4a;"></span>
           </span>
-          <span class="text-[13px] font-bold" style="color:rgba(255,255,255,0.88);">
-            Delivery Proposals
-          </span>
-          <span class="inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold"
-                style="background:rgba(109,191,74,0.15); color:#6dbf4a; border:1px solid rgba(109,191,74,0.25);">
-            {{ proposals().length }}
-          </span>
+          <span class="text-[14px] font-bold" style="color:rgba(255,255,255,0.88);">Live Feed</span>
+          @if (proposals().length > 0) {
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold"
+                  style="background:rgba(109,191,74,0.14); color:#6dbf4a; border:1px solid rgba(109,191,74,0.22);">
+              {{ proposals().length }}
+            </span>
+          }
         </div>
-        <p class="text-[11px]" style="color:rgba(255,255,255,0.2);">Orders ready for pickup near you</p>
+        <p class="text-[11px]" style="color:rgba(255,255,255,0.16);">Orders ready for pickup near you</p>
       </div>
 
-      <!-- ── STICKY TOP — Active deliveries (Delivery entity exists) ── -->
+      <!-- Active deliveries (sticky section) -->
       @if (activeDeliveries().length > 0) {
-        <div class="shrink-0 flex flex-col gap-3 px-6 pt-4 pb-3"
-             style="border-bottom:1px solid rgba(255,255,255,0.08);">
-          <p class="text-[9px] font-bold tracking-[0.15em] uppercase"
-             style="color:rgba(255,255,255,0.25);">Active</p>
+        <div class="shrink-0 flex flex-col gap-3 px-6 pt-5 pb-4"
+             style="border-bottom:1px solid rgba(255,255,255,0.06); background:rgba(255,255,255,0.008);">
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full" style="background:rgba(255,255,255,0.25);"></span>
+            <p class="text-[9px] font-bold tracking-[0.18em] uppercase"
+               style="color:rgba(255,255,255,0.28);">Active Deliveries</p>
+          </div>
           @for (delivery of activeDeliveries(); track delivery.id) {
-            <div class="rounded-[18px] overflow-hidden flex flex-col"
+            <div class="rounded-2xl overflow-hidden flex flex-col"
                  [style.border]="delivery.status === 'PickedUp'
-                   ? '1px solid rgba(56,189,248,0.2)'
-                   : '1px solid rgba(109,191,74,0.2)'"
-                 style="background:rgba(255,255,255,0.025);">
+                   ? '1px solid rgba(56,189,248,0.18)'
+                   : '1px solid rgba(109,191,74,0.18)'"
+                 [style.background]="delivery.status === 'PickedUp'
+                   ? 'rgba(56,189,248,0.025)'
+                   : 'rgba(109,191,74,0.02)'">
               <ng-container [ngTemplateOutlet]="activeCard"
                             [ngTemplateOutletContext]="{ delivery: delivery }">
               </ng-container>
@@ -191,57 +247,62 @@
         </div>
       }
 
-      <!-- ── SCROLLABLE — Proposals (no delivery entity yet) ── -->
-      <div class="flex-1 overflow-y-auto min-h-0 flex flex-col gap-3 px-6 pt-4 pb-6"
-           style="scrollbar-width:thin; scrollbar-color:rgba(109,191,74,0.12) transparent;">
+      <!-- Proposals feed (scrollable) -->
+      <div class="flex-1 overflow-y-auto min-h-0 flex flex-col gap-3 px-6 pt-5 pb-6"
+           style="scrollbar-width:thin; scrollbar-color:rgba(109,191,74,0.1) transparent;">
 
         @if (proposals().length > 0) {
-          <p class="text-[9px] font-bold tracking-[0.15em] uppercase shrink-0"
-             style="color:rgba(255,255,255,0.25);">Proposals</p>
+          <div class="flex items-center gap-2 shrink-0 mb-1">
+            <span class="w-1.5 h-1.5 rounded-full" style="background:rgba(109,191,74,0.4);"></span>
+            <p class="text-[9px] font-bold tracking-[0.18em] uppercase"
+               style="color:rgba(109,191,74,0.4);">New Proposals</p>
+          </div>
         }
 
         @for (proposal of proposals(); track proposal.id) {
-          <div class="rounded-[18px] overflow-hidden flex flex-col shrink-0"
-               style="background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.07);">
+          <div class="rounded-2xl overflow-hidden flex flex-col shrink-0"
+               style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.07);">
             <ng-container [ngTemplateOutlet]="proposalCard"
                           [ngTemplateOutletContext]="{ proposal: proposal }">
             </ng-container>
           </div>
         }
 
+        <!-- Offline empty state -->
         @if (!isAvailable() && proposals().length === 0) {
-          <div class="flex flex-col items-center justify-center gap-4 flex-1 text-center px-12 py-16">
-            <div class="w-20 h-20 rounded-3xl flex items-center justify-center"
-                 style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
+          <div class="flex flex-col items-center justify-center gap-5 flex-1 text-center px-16 py-20">
+            <div class="w-24 h-24 rounded-3xl flex items-center justify-center"
+                 style="background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.06);">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                   stroke-width="1.2" stroke="rgba(255,255,255,0.1)" class="w-10 h-10">
+                   stroke-width="1.2" stroke="rgba(255,255,255,0.1)" class="w-12 h-12">
                 <path stroke-linecap="round" stroke-linejoin="round"
                       d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
               </svg>
             </div>
-            <div>
-              <p class="text-[15px] font-semibold mb-1.5" style="color:rgba(255,255,255,0.2);">You're offline</p>
-              <p class="text-[12px] leading-relaxed" style="color:rgba(255,255,255,0.12);">
-                Toggle your availability to start receiving delivery proposals
+            <div class="flex flex-col gap-2">
+              <p class="text-[16px] font-bold" style="color:rgba(255,255,255,0.16);">You're Offline</p>
+              <p class="text-[12px] leading-relaxed" style="color:rgba(255,255,255,0.1);">
+                Toggle your availability to start<br>receiving delivery proposals
               </p>
             </div>
           </div>
         }
 
+        <!-- Available, no proposals -->
         @if (isAvailable() && proposals().length === 0 && activeDeliveries().length === 0) {
-          <div class="flex flex-col items-center justify-center gap-4 flex-1 text-center px-12 py-16">
-            <div class="w-20 h-20 rounded-3xl flex items-center justify-center"
+          <div class="flex flex-col items-center justify-center gap-5 flex-1 text-center px-16 py-20">
+            <div class="w-24 h-24 rounded-3xl flex items-center justify-center"
                  style="background:rgba(109,191,74,0.04); border:1px solid rgba(109,191,74,0.08);">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                   stroke-width="1.2" stroke="rgba(109,191,74,0.2)" class="w-10 h-10">
+                   stroke-width="1.2" stroke="rgba(109,191,74,0.2)" class="w-12 h-12">
                 <path stroke-linecap="round" stroke-linejoin="round"
                       d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
               </svg>
             </div>
-            <div>
-              <p class="text-[15px] font-semibold mb-1.5" style="color:rgba(255,255,255,0.2);">No proposals yet</p>
-              <p class="text-[12px] leading-relaxed" style="color:rgba(255,255,255,0.12);">
-                New delivery proposals will appear here automatically
+            <div class="flex flex-col gap-2">
+              <p class="text-[16px] font-bold" style="color:rgba(255,255,255,0.16);">Standing By</p>
+              <p class="text-[12px] leading-relaxed" style="color:rgba(255,255,255,0.1);">
+                You're online and ready.<br>New proposals will appear here automatically.
               </p>
             </div>
           </div>
@@ -253,16 +314,17 @@
 </div>
 
 <!-- ══════════════════════════════════════════════
-     PROPOSAL CARD — order id, no delivery entity yet
+     PROPOSAL CARD
      Context: { proposal: DeliveryProposal }
 ══════════════════════════════════════════════ -->
 <ng-template #proposalCard let-proposal="proposal">
 
-  <div class="flex items-center justify-between px-5 py-3.5"
-       style="border-bottom:1px solid rgba(255,255,255,0.05);">
-    <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-           style="background:rgba(109,191,74,0.1); border:1px solid rgba(109,191,74,0.18);">
+  <!-- Restaurant header -->
+  <div class="flex items-center justify-between px-5 py-4"
+       style="border-bottom:1px solid rgba(255,255,255,0.04);">
+    <div class="flex items-center gap-3.5">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+           style="background:rgba(109,191,74,0.08); border:1px solid rgba(109,191,74,0.15);">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
              stroke-width="1.8" stroke="#6dbf4a" class="w-4 h-4">
           <path stroke-linecap="round" stroke-linejoin="round"
@@ -274,18 +336,18 @@
            style="font-family:'Playfair Display',serif; color:rgba(255,255,255,0.9);">
           {{ proposal.restaurantName }}
         </p>
-        <p class="text-[10px]" style="color:rgba(255,255,255,0.3);">{{ proposal.restaurantAddress }}</p>
+        <p class="text-[10px]" style="color:rgba(255,255,255,0.28);">{{ proposal.restaurantAddress }}</p>
       </div>
     </div>
     <div class="flex items-center gap-2">
       @if (proposal.tip > 0) {
-        <span class="px-2 py-1 rounded-full text-[9px] font-black"
-              style="background:rgba(212,136,30,0.12); border:1px solid rgba(212,136,30,0.3); color:#d4881e;">
-          +€{{ proposal.tip.toFixed(2) }} TIP
+        <span class="px-2 py-1 rounded-full text-[9px] font-black uppercase tracking-wide"
+              style="background:rgba(212,136,30,0.09); border:1px solid rgba(212,136,30,0.24); color:#d4881e;">
+          +€{{ proposal.tip.toFixed(2) }} tip
         </span>
       }
       <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full"
-           style="background:rgba(109,191,74,0.08); border:1px solid rgba(109,191,74,0.18);">
+           style="background:rgba(109,191,74,0.07); border:1px solid rgba(109,191,74,0.14);">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
              stroke-width="2" stroke="#6dbf4a" class="w-3 h-3">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -297,30 +359,32 @@
     </div>
   </div>
 
-  <div class="flex items-center gap-4 px-5 py-3.5"
+  <!-- Delivery address + earnings + expand -->
+  <div class="flex items-center gap-4 px-5 py-4"
        style="border-bottom:1px solid rgba(255,255,255,0.04);">
     <div class="flex-1 min-w-0">
-      <p class="text-[10px] font-bold tracking-[0.12em] uppercase mb-0.5"
-         style="color:rgba(255,255,255,0.25);">Deliver to</p>
-      <p class="text-[12px] font-semibold truncate" style="color:rgba(255,255,255,0.7);">
+      <p class="text-[9px] font-bold tracking-[0.14em] uppercase mb-1"
+         style="color:rgba(255,255,255,0.2);">Deliver to</p>
+      <p class="text-[12px] font-semibold truncate" style="color:rgba(255,255,255,0.65);">
         {{ proposal.deliveryAddress }}
       </p>
     </div>
     <div class="flex flex-col items-end gap-0.5 shrink-0">
-      <p class="text-[10px]" style="color:rgba(255,255,255,0.25);">Est. earnings</p>
-      <p class="text-[20px] font-black" style="color:#6dbf4a; font-family:'Playfair Display',serif;">
+      <p class="text-[9px]" style="color:rgba(255,255,255,0.2);">Est. earnings</p>
+      <p class="text-[22px] font-black leading-none"
+         style="color:#6dbf4a; font-family:'Playfair Display',serif;">
         €{{ proposal.estimatedEarnings.toFixed(2) }}
       </p>
-      <p class="text-[9px]" style="color:rgba(255,255,255,0.2);">
-        €{{ proposal.baseFee.toFixed(2) }} + {{ proposal.distanceKm }}km
-        @if (proposal.tip > 0) { + €{{ proposal.tip.toFixed(2) }} tip }
+      <p class="text-[9px] mt-0.5" style="color:rgba(255,255,255,0.18);">
+        €{{ proposal.baseFee.toFixed(2) }} · {{ proposal.distanceKm }}km
+        @if (proposal.tip > 0) { · €{{ proposal.tip.toFixed(2) }} tip }
       </p>
     </div>
     <button (click)="toggleExpand(proposal.id)"
-            class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-all"
-            [style.background]="isExpanded(proposal.id) ? 'rgba(109,191,74,0.08)' : 'rgba(255,255,255,0.04)'"
-            [style.border]="isExpanded(proposal.id) ? '1px solid rgba(109,191,74,0.2)' : '1px solid rgba(255,255,255,0.08)'"
-            [style.color]="isExpanded(proposal.id) ? '#6dbf4a' : 'rgba(255,255,255,0.3)'">
+            class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-all duration-200"
+            [style.background]="isExpanded(proposal.id) ? 'rgba(109,191,74,0.1)' : 'rgba(255,255,255,0.04)'"
+            [style.border]="isExpanded(proposal.id) ? '1px solid rgba(109,191,74,0.2)' : '1px solid rgba(255,255,255,0.07)'"
+            [style.color]="isExpanded(proposal.id) ? '#6dbf4a' : 'rgba(255,255,255,0.25)'">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
            stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5"
            [style.transform]="isExpanded(proposal.id) ? 'rotate(180deg)' : 'rotate(0deg)'"
@@ -330,34 +394,36 @@
     </button>
   </div>
 
+  <!-- Expanded route + map -->
   @if (isExpanded(proposal.id)) {
-    <div style="border-bottom:1px solid rgba(255,255,255,0.05);">
-      <div class="flex flex-col gap-3 px-5 py-4">
-        <div class="flex items-start gap-3">
-          <div class="flex flex-col items-center shrink-0 mt-1.5" style="gap:4px;">
-            <span class="w-2 h-2 rounded-full shrink-0" style="background:#6dbf4a;"></span>
-            <span class="w-0.5 flex-1 min-h-5" style="background:rgba(109,191,74,0.25);"></span>
-            <span class="w-2 h-2 rounded-full shrink-0" style="background:rgba(255,255,255,0.3);"></span>
+    <div style="border-bottom:1px solid rgba(255,255,255,0.04);">
+      <div class="flex items-start gap-4 px-5 py-4">
+        <div class="flex flex-col items-center shrink-0 mt-1" style="gap:3px;">
+          <span class="w-2.5 h-2.5 rounded-full shrink-0"
+                style="background:#6dbf4a; box-shadow:0 0 6px rgba(109,191,74,0.4);"></span>
+          <span class="w-px flex-1 min-h-6"
+                style="background:linear-gradient(to bottom,rgba(109,191,74,0.4),rgba(255,255,255,0.12));"></span>
+          <span class="w-2.5 h-2.5 rounded-full shrink-0"
+                style="background:rgba(255,255,255,0.22);"></span>
+        </div>
+        <div class="flex flex-col gap-4 flex-1 min-w-0">
+          <div>
+            <p class="text-[9px] font-bold tracking-[0.15em] uppercase mb-1"
+               style="color:rgba(109,191,74,0.5);">Pickup at</p>
+            <p class="text-[12px] font-semibold" style="color:rgba(255,255,255,0.72);">
+              {{ proposal.restaurantAddress }}
+            </p>
           </div>
-          <div class="flex flex-col gap-4 flex-1 min-w-0">
-            <div>
-              <p class="text-[9px] font-bold tracking-[0.15em] uppercase mb-0.5"
-                 style="color:rgba(109,191,74,0.5);">Pickup at</p>
-              <p class="text-[12px] font-semibold" style="color:rgba(255,255,255,0.75);">
-                {{ proposal.restaurantAddress }}
-              </p>
-            </div>
-            <div>
-              <p class="text-[9px] font-bold tracking-[0.15em] uppercase mb-0.5"
-                 style="color:rgba(255,255,255,0.25);">Deliver to</p>
-              <p class="text-[12px] font-semibold" style="color:rgba(255,255,255,0.75);">
-                {{ proposal.deliveryAddress }}
-              </p>
-            </div>
+          <div>
+            <p class="text-[9px] font-bold tracking-[0.15em] uppercase mb-1"
+               style="color:rgba(255,255,255,0.22);">Drop off</p>
+            <p class="text-[12px] font-semibold" style="color:rgba(255,255,255,0.72);">
+              {{ proposal.deliveryAddress }}
+            </p>
           </div>
         </div>
       </div>
-      <div class="relative mx-5 mb-4 rounded-xl overflow-hidden"
+      <div class="relative mx-5 mb-4 rounded-2xl overflow-hidden"
            style="height:160px; background:#071407;">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9!2d2.3364!3d48.8601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDjCsDUxJzM2LjQiTiAywrAyMCcxMS4wIkU!5e0!3m2!1sfr!2sfr!4v1234567890"
                 class="w-full h-full border-0"
@@ -367,27 +433,47 @@
     </div>
   }
 
-  <div class="px-5 py-3.5">
+  <!-- Accept button -->
+  <div class="px-5 py-4">
     <button (click)="acceptDelivery(proposal.id)"
             [disabled]="acceptState().loading"
-            class="w-full py-2.5 rounded-[10px] text-[12px] font-bold tracking-[0.04em]
-                   transition-all hover:scale-[1.01] active:scale-[0.99]"
+            class="w-full py-3 rounded-xl text-[13px] font-bold tracking-[0.04em]
+                   transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]
+                   flex items-center justify-center gap-2"
             style="background:linear-gradient(135deg,#4a7c32,#6dbf4a); color:#0d1a0f;
-                   border:none; cursor:pointer; box-shadow:0 4px 14px rgba(74,124,50,0.3);">
-      {{ acceptState().loading ? 'Accepting…' : 'Accept Delivery' }}
+                   border:none; cursor:pointer;
+                   box-shadow:0 4px 16px rgba(74,124,50,0.28), inset 0 1px 0 rgba(255,255,255,0.14);">
+      @if (acceptState().loading) {
+        <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+        Accepting…
+      } @else {
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+             stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+        </svg>
+        Accept Delivery
+      }
     </button>
   </div>
 
 </ng-template>
 
+<!-- ══════════════════════════════════════════════
+     ACTIVE DELIVERY CARD
+     Context: { delivery: ActiveDelivery }
+══════════════════════════════════════════════ -->
 <ng-template #activeCard let-delivery="delivery">
 
-  <div class="flex items-center justify-between px-5 py-3.5"
-       style="border-bottom:1px solid rgba(255,255,255,0.05);">
-    <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-           [style.background]="delivery.status === 'PickedUp' ? 'rgba(56,189,248,0.08)' : 'rgba(109,191,74,0.1)'"
-           [style.border]="delivery.status === 'PickedUp' ? '1px solid rgba(56,189,248,0.15)' : '1px solid rgba(109,191,74,0.18)'">
+  <!-- Restaurant header -->
+  <div class="flex items-center justify-between px-5 py-4"
+       style="border-bottom:1px solid rgba(255,255,255,0.04);">
+    <div class="flex items-center gap-3.5">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+           [style.background]="delivery.status === 'PickedUp' ? 'rgba(56,189,248,0.07)' : 'rgba(109,191,74,0.08)'"
+           [style.border]="delivery.status === 'PickedUp' ? '1px solid rgba(56,189,248,0.14)' : '1px solid rgba(109,191,74,0.15)'">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
              [attr.stroke]="delivery.status === 'PickedUp' ? '#38bdf8' : '#6dbf4a'" class="w-4 h-4">
           <path stroke-linecap="round" stroke-linejoin="round"
@@ -399,61 +485,63 @@
            style="font-family:'Playfair Display',serif; color:rgba(255,255,255,0.9);">
           {{ delivery.restaurantName }}
         </p>
-        <p class="text-[10px]" style="color:rgba(255,255,255,0.3);">{{ delivery.restaurantAddress }}</p>
+        <p class="text-[10px]" style="color:rgba(255,255,255,0.28);">{{ delivery.restaurantAddress }}</p>
       </div>
     </div>
     <div class="flex items-center gap-2">
       @if (delivery.status === 'Accepted') {
         <span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold"
-              style="background:rgba(109,191,74,0.1); border:1px solid rgba(109,191,74,0.2); color:#6dbf4a;">
+              style="background:rgba(109,191,74,0.08); border:1px solid rgba(109,191,74,0.18); color:#6dbf4a;">
           <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background:#6dbf4a;"></span>
           En route
         </span>
       }
       @if (delivery.status === 'PickedUp') {
         <span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold"
-              style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); color:#38bdf8;">
+              style="background:rgba(56,189,248,0.07); border:1px solid rgba(56,189,248,0.18); color:#38bdf8;">
           <span class="w-1.5 h-1.5 rounded-full" style="background:#38bdf8;"></span>
           In Transit
         </span>
       }
       @if (delivery.tip > 0) {
-        <span class="px-2 py-1 rounded-full text-[9px] font-black"
-              style="background:rgba(212,136,30,0.12); border:1px solid rgba(212,136,30,0.3); color:#d4881e;">
-          +€{{ delivery.tip.toFixed(2) }} TIP
+        <span class="px-2 py-1 rounded-full text-[9px] font-black uppercase tracking-wide"
+              style="background:rgba(212,136,30,0.09); border:1px solid rgba(212,136,30,0.24); color:#d4881e;">
+          +€{{ delivery.tip.toFixed(2) }} tip
         </span>
       }
       <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full"
-           style="background:rgba(109,191,74,0.08); border:1px solid rgba(109,191,74,0.18);">
+           style="background:rgba(109,191,74,0.07); border:1px solid rgba(109,191,74,0.14);">
         <span class="text-[11px] font-bold" style="color:#6dbf4a;">{{ delivery.distanceKm }} km</span>
       </div>
     </div>
   </div>
 
-  <div class="flex items-center gap-4 px-5 py-3.5"
+  <!-- Delivery address + earnings + expand -->
+  <div class="flex items-center gap-4 px-5 py-4"
        style="border-bottom:1px solid rgba(255,255,255,0.04);">
     <div class="flex-1 min-w-0">
-      <p class="text-[10px] font-bold tracking-[0.12em] uppercase mb-0.5"
-         style="color:rgba(255,255,255,0.25);">Deliver to</p>
-      <p class="text-[12px] font-semibold truncate" style="color:rgba(255,255,255,0.7);">
+      <p class="text-[9px] font-bold tracking-[0.14em] uppercase mb-1"
+         style="color:rgba(255,255,255,0.2);">Deliver to</p>
+      <p class="text-[12px] font-semibold truncate" style="color:rgba(255,255,255,0.65);">
         {{ delivery.deliveryAddress }}
       </p>
     </div>
     <div class="flex flex-col items-end gap-0.5 shrink-0">
-      <p class="text-[10px]" style="color:rgba(255,255,255,0.25);">Earnings</p>
-      <p class="text-[20px] font-black" style="color:#6dbf4a; font-family:'Playfair Display',serif;">
+      <p class="text-[9px]" style="color:rgba(255,255,255,0.2);">Earnings</p>
+      <p class="text-[22px] font-black leading-none"
+         style="color:#6dbf4a; font-family:'Playfair Display',serif;">
         €{{ delivery.estimatedEarnings.toFixed(2) }}
       </p>
-      <p class="text-[9px]" style="color:rgba(255,255,255,0.2);">
-        €{{ delivery.baseFee.toFixed(2) }} + {{ delivery.distanceKm }}km
-        @if (delivery.tip > 0) { + €{{ delivery.tip.toFixed(2) }} tip }
+      <p class="text-[9px] mt-0.5" style="color:rgba(255,255,255,0.18);">
+        €{{ delivery.baseFee.toFixed(2) }} · {{ delivery.distanceKm }}km
+        @if (delivery.tip > 0) { · €{{ delivery.tip.toFixed(2) }} tip }
       </p>
     </div>
     <button (click)="toggleExpand(delivery.id)"
-            class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-all"
-            [style.background]="isExpanded(delivery.id) ? 'rgba(109,191,74,0.08)' : 'rgba(255,255,255,0.04)'"
-            [style.border]="isExpanded(delivery.id) ? '1px solid rgba(109,191,74,0.2)' : '1px solid rgba(255,255,255,0.08)'"
-            [style.color]="isExpanded(delivery.id) ? '#6dbf4a' : 'rgba(255,255,255,0.3)'">
+            class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-all duration-200"
+            [style.background]="isExpanded(delivery.id) ? 'rgba(109,191,74,0.1)' : 'rgba(255,255,255,0.04)'"
+            [style.border]="isExpanded(delivery.id) ? '1px solid rgba(109,191,74,0.2)' : '1px solid rgba(255,255,255,0.07)'"
+            [style.color]="isExpanded(delivery.id) ? '#6dbf4a' : 'rgba(255,255,255,0.25)'">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
            stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5"
            [style.transform]="isExpanded(delivery.id) ? 'rotate(180deg)' : 'rotate(0deg)'"
@@ -463,34 +551,37 @@
     </button>
   </div>
 
+  <!-- Expanded route + map -->
   @if (isExpanded(delivery.id)) {
-    <div style="border-bottom:1px solid rgba(255,255,255,0.05);">
-      <div class="flex flex-col gap-3 px-5 py-4">
-        <div class="flex items-start gap-3">
-          <div class="flex flex-col items-center shrink-0 mt-1.5" style="gap:4px;">
-            <span class="w-2 h-2 rounded-full shrink-0" style="background:#6dbf4a;"></span>
-            <span class="w-0.5 flex-1 min-h-5" style="background:rgba(109,191,74,0.25);"></span>
-            <span class="w-2 h-2 rounded-full shrink-0" style="background:rgba(255,255,255,0.3);"></span>
+    <div style="border-bottom:1px solid rgba(255,255,255,0.04);">
+      <div class="flex items-start gap-4 px-5 py-4">
+        <div class="flex flex-col items-center shrink-0 mt-1" style="gap:3px;">
+          <span class="w-2.5 h-2.5 rounded-full shrink-0"
+                [style.background]="delivery.status === 'PickedUp' ? '#38bdf8' : '#6dbf4a'"
+                [style.box-shadow]="delivery.status === 'PickedUp' ? '0 0 6px rgba(56,189,248,0.4)' : '0 0 6px rgba(109,191,74,0.4)'"></span>
+          <span class="w-px flex-1 min-h-6"
+                style="background:linear-gradient(to bottom,rgba(109,191,74,0.3),rgba(255,255,255,0.1));"></span>
+          <span class="w-2.5 h-2.5 rounded-full shrink-0"
+                style="background:rgba(255,255,255,0.22);"></span>
+        </div>
+        <div class="flex flex-col gap-4 flex-1 min-w-0">
+          <div>
+            <p class="text-[9px] font-bold tracking-[0.15em] uppercase mb-1"
+               style="color:rgba(109,191,74,0.5);">Pickup at</p>
+            <p class="text-[12px] font-semibold" style="color:rgba(255,255,255,0.72);">
+              {{ delivery.restaurantAddress }}
+            </p>
           </div>
-          <div class="flex flex-col gap-4 flex-1 min-w-0">
-            <div>
-              <p class="text-[9px] font-bold tracking-[0.15em] uppercase mb-0.5"
-                 style="color:rgba(109,191,74,0.5);">Pickup at</p>
-              <p class="text-[12px] font-semibold" style="color:rgba(255,255,255,0.75);">
-                {{ delivery.restaurantAddress }}
-              </p>
-            </div>
-            <div>
-              <p class="text-[9px] font-bold tracking-[0.15em] uppercase mb-0.5"
-                 style="color:rgba(255,255,255,0.25);">Deliver to</p>
-              <p class="text-[12px] font-semibold" style="color:rgba(255,255,255,0.75);">
-                {{ delivery.deliveryAddress }}
-              </p>
-            </div>
+          <div>
+            <p class="text-[9px] font-bold tracking-[0.15em] uppercase mb-1"
+               style="color:rgba(255,255,255,0.22);">Drop off</p>
+            <p class="text-[12px] font-semibold" style="color:rgba(255,255,255,0.72);">
+              {{ delivery.deliveryAddress }}
+            </p>
           </div>
         </div>
       </div>
-      <div class="relative mx-5 mb-4 rounded-xl overflow-hidden"
+      <div class="relative mx-5 mb-4 rounded-2xl overflow-hidden"
            style="height:160px; background:#071407;">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9!2d2.3364!3d48.8601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDjCsDUxJzM2LjQiTiAywrAyMCcxMS4wIkU!5e0!3m2!1sfr!2sfr!4v1234567890"
                 class="w-full h-full border-0"
@@ -500,31 +591,67 @@
     </div>
   }
 
-  <div class="px-5 py-3.5">
+  <!-- Action buttons -->
+  <div class="px-5 py-4">
     @if (delivery.status === 'Accepted') {
       <button (click)="markPickedUp(delivery.id)"
               [disabled]="pickupState().loading"
-              class="w-full py-2.5 rounded-[10px] text-[12px] font-bold tracking-[0.04em]
-                     transition-all hover:scale-[1.01] active:scale-[0.99]"
+              class="w-full py-3 rounded-xl text-[13px] font-bold tracking-[0.04em]
+                     transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]
+                     flex items-center justify-center gap-2"
               style="background:linear-gradient(135deg,#4a7c32,#6dbf4a); color:#0d1a0f;
-                     border:none; cursor:pointer; box-shadow:0 4px 14px rgba(74,124,50,0.3);">
-        {{ pickupState().loading ? 'Updating…' : '📦 Picked Up' }}
+                     border:none; cursor:pointer;
+                     box-shadow:0 4px 16px rgba(74,124,50,0.28), inset 0 1px 0 rgba(255,255,255,0.14);">
+        @if (pickupState().loading) {
+          <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+          </svg>
+          Updating…
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+          </svg>
+          Mark as Picked Up
+        }
       </button>
     }
     @if (delivery.status === 'PickedUp') {
       <div class="flex gap-3">
         <button disabled
-                class="flex-1 py-2.5 rounded-[10px] text-[12px] font-bold"
-                style="background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.25);
-                       border:1px solid rgba(255,255,255,0.07); cursor:not-allowed;">
-          ✓ Picked Up
+                class="flex-1 py-3 rounded-xl text-[12px] font-bold flex items-center justify-center gap-1.5"
+                style="background:rgba(109,191,74,0.04); color:rgba(109,191,74,0.38);
+                       border:1px solid rgba(109,191,74,0.1); cursor:not-allowed;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+          </svg>
+          Picked Up
         </button>
         <button (click)="markDelivered(delivery.id)"
                 [disabled]="deliveredState().loading"
-                class="flex-1 py-2.5 rounded-[10px] text-[12px] font-bold transition-all hover:scale-[1.01]"
+                class="flex-1 py-3 rounded-xl text-[13px] font-bold
+                       transition-all duration-200 hover:scale-[1.01]
+                       flex items-center justify-center gap-2"
                 style="background:linear-gradient(135deg,#0e4a72,#38bdf8); color:#fff;
-                       border:none; cursor:pointer; box-shadow:0 4px 14px rgba(56,189,248,0.2);">
-          {{ deliveredState().loading ? 'Updating…' : '✓ Delivered' }}
+                       border:none; cursor:pointer;
+                       box-shadow:0 4px 14px rgba(56,189,248,0.2), inset 0 1px 0 rgba(255,255,255,0.1);">
+          @if (deliveredState().loading) {
+            <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+            Updating…
+          } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                 stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+            Delivered
+          }
         </button>
       </div>
     }

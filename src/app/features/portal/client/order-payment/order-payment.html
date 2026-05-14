@@ -62,7 +62,9 @@
       <div class="flex items-center gap-4">
         <a routerLink="/portal/home"
            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-[12px] font-semibold tracking-[0.06em] uppercase"
-           style="background:rgba(13,26,15,0.65); border:1px solid rgba(109,191,74,0.22); color:rgba(255,255,255,0.8); backdrop-filter:blur(8px); text-decoration:none; transition:all 0.2s ease;">
+           style="background:rgba(13,26,15,0.65); border:1px solid rgba(109,191,74,0.22); color:rgba(255,255,255,0.8); backdrop-filter:blur(10px); text-decoration:none; transition:all 0.2s ease;"
+           onmouseenter="this.style.background='rgba(109,191,74,0.1)'; this.style.borderColor='rgba(109,191,74,0.35)'; this.style.color='#6dbf4a';"
+           onmouseleave="this.style.background='rgba(13,26,15,0.65)'; this.style.borderColor='rgba(109,191,74,0.22)'; this.style.color='rgba(255,255,255,0.8)';">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
@@ -70,18 +72,18 @@
           Back
         </a>
         <div class="flex flex-col gap-0.5">
+          <p class="text-[10px] font-bold tracking-[0.18em] uppercase" style="color:rgba(109,191,74,0.5);">
+            Order #{{ order.id.slice(0, 8).toUpperCase() }}
+          </p>
           <h1 class="text-[22px] font-bold leading-none"
               style="font-family:'Playfair Display',serif; letter-spacing:-0.02em;">
             Checkout
           </h1>
-          <p class="text-[11px] font-light" style="color:rgba(255,255,255,0.35);">
-            Order #{{ order.id.slice(0, 8).toUpperCase() }}
-          </p>
         </div>
       </div>
 
       <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full"
-           style="background:rgba(109,191,74,0.06); border:1px solid rgba(109,191,74,0.15);">
+           style="background:rgba(109,191,74,0.06); border:1px solid rgba(109,191,74,0.18);">
         <span class="w-1.5 h-1.5 rounded-full shrink-0 animate-pulse" style="background:#6dbf4a;"></span>
         <span class="text-[11px] font-semibold tracking-[0.08em] uppercase"
               style="color:rgba(109,191,74,0.8);">
